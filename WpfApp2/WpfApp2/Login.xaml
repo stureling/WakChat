@@ -1,0 +1,13 @@
+﻿<Window x:Class="WpfApp2.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2"
+        mc:Ignorable="d"
+        Title="Login" Height="160" Width="300" Style="{StaticResource Darkmodebg}" >
+    <Grid Margin="-1,0,1,0">
+        <Button Content="Enter" HorizontalAlignment="Left" Click="Button_Click" Margin="207,99,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource Darkmodebtn}"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="80,49,0,0" TextWrapping="Wrap" Width="120" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top" Cursor="Pen" Style="{StaticResource Darkmodetxt}"/>
+    </Grid>
+</Window>
