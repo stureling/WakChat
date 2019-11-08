@@ -4,7 +4,7 @@
 winexe
 C#
 .cs
-C:\Users\Monky\tddd49\WpfApp2\WpfApp2\obj\Debug\
+C:\Users\Monky\tddd49\WpfApp2\WpfApp2\obj\x86\Debug\
 WpfApp2
 none
 false
@@ -12,8 +12,8 @@ DEBUG;TRACE
 C:\Users\Monky\tddd49\WpfApp2\WpfApp2\App.xaml
 4-160624349
 
-7678806868
-131569487696
+9787897869
+711184432477
 Views\ConnectionWindow.xaml;GlobalStyle.xaml;Views\Login.xaml;Views\MainWindow.xaml;
 
 False
