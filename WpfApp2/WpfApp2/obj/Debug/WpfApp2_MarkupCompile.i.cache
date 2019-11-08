@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\erijo137\source\repos\WpfApp2\WpfApp2\obj\Debug\
+C:\Users\Monky\tddd49\WpfApp2\WpfApp2\obj\Debug\
 WpfApp2
 none
 false
 DEBUG;TRACE
-C:\Users\erijo137\source\repos\WpfApp2\WpfApp2\App.xaml
-3-1855014240
+C:\Users\Monky\tddd49\WpfApp2\WpfApp2\App.xaml
+4-160624349
 
-101296065218
+81912581431
 131569487696
-GlobalStyle.xaml;Login.xaml;MainWindow.xaml;
+Views\ConnectionWindow.xaml;GlobalStyle.xaml;Views\Login.xaml;Views\MainWindow.xaml;
 
-True
+False
 

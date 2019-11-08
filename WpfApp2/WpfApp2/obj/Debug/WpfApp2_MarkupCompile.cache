@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Monky\tddd49\WpfApp2\WpfApp2\App.xaml
-3-1855014240
+4-160624349
 
-6-1227449588
+7678806868
 131569487696
-GlobalStyle.xaml;Login.xaml;MainWindow.xaml;
+Views\ConnectionWindow.xaml;GlobalStyle.xaml;Views\Login.xaml;Views\MainWindow.xaml;
 
 False
 
