@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using WpfApp2.Viewmodels;
 
 namespace WpfApp2
 {
@@ -10,6 +11,8 @@ namespace WpfApp2
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new LoginViewmodel();
         }
     }
 }

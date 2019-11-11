@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfApp2.Viewmodels;
 
 namespace WpfApp2.Views
 {
@@ -23,7 +24,7 @@ namespace WpfApp2.Views
         {
             InitializeComponent();
 
-          //  this.DataContext = new LoginViewModel();
+            //DataContext = new LoginViewmodel();
         }
 
         private void Enter_Click(object sender, RoutedEventArgs e)
