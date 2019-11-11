@@ -25,7 +25,7 @@ namespace test
         {
             InitializeComponent();
 
-            DataContext = new MainWindowViewmodel();
+            DataContext = new MainWindowViewmodel(this);
 
         }
     }

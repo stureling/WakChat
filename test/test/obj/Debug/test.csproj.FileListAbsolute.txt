@@ -12,3 +12,16 @@ C:\Users\annli504\source\repos\test\test\obj\Debug\test.csproj.GenerateResource.
 C:\Users\annli504\source\repos\test\test\obj\Debug\test.csproj.CoreCompileInputs.cache
 C:\Users\annli504\source\repos\test\test\obj\Debug\test.exe
 C:\Users\annli504\source\repos\test\test\obj\Debug\test.pdb
+C:\Users\ERC\Desktop\tddd49\test\test\bin\Debug\test.exe.config
+C:\Users\ERC\Desktop\tddd49\test\test\bin\Debug\test.exe
+C:\Users\ERC\Desktop\tddd49\test\test\bin\Debug\test.pdb
+C:\Users\ERC\Desktop\tddd49\test\test\obj\Debug\MainWindow.g.cs
+C:\Users\ERC\Desktop\tddd49\test\test\obj\Debug\App.g.cs
+C:\Users\ERC\Desktop\tddd49\test\test\obj\Debug\test_MarkupCompile.cache
+C:\Users\ERC\Desktop\tddd49\test\test\obj\Debug\test_MarkupCompile.lref
+C:\Users\ERC\Desktop\tddd49\test\test\obj\Debug\MainWindow.baml
+C:\Users\ERC\Desktop\tddd49\test\test\obj\Debug\test.g.resources
+C:\Users\ERC\Desktop\tddd49\test\test\obj\Debug\test.Properties.Resources.resources
+C:\Users\ERC\Desktop\tddd49\test\test\obj\Debug\test.csproj.GenerateResource.cache
+C:\Users\ERC\Desktop\tddd49\test\test\obj\Debug\test.exe
+C:\Users\ERC\Desktop\tddd49\test\test\obj\Debug\test.pdb

@@ -6,10 +6,9 @@
         xmlns:local="clr-namespace:test"
         xmlns:vm="clr-namespace:test.Viewmodel"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=vm:MainWindowViewmodel, IsDesignTimeCreatable=True}" 
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Exit" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" Command="{Binding TestCommand}"/>
+        <Button Content="Exit" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" Command="{Binding ExitCommand}"/>
 
     </Grid>
 </Window>

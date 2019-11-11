@@ -12,17 +12,20 @@ namespace test.Viewmodel
     public class MainWindowViewmodel
     {
         public ICommand ExitCommand { get; set; }
-        
+        public MainWindow window;
 
-        public MainWindowViewmodel()
+        public MainWindowViewmodel(MainWindow window)
         {
+            this.window = window;
             this.ExitCommand = new ExitCommand(this);
 
         }
 
         public void ExitClick()
         {
+            
             Debug.WriteLine("hello");
+            this.window.Close();
         }
     }
 }
