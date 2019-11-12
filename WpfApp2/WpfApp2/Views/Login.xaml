@@ -6,19 +6,20 @@
         xmlns:vm="clr-namespace:WpfApp2.Viewmodels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vm:LoginViewmodel, IsDesignTimeCreatable=True}" 
-        Title="Login" Height="160" Width="300" Style="{StaticResource Darkmodebg}" WindowStyle="None">
+        Title="Login" Height="260" Width="300" Style="{StaticResource Darkmodebg}" WindowStyle="None">
     <Grid Margin="-1,0,1,0" Cursor="Arrow">
         <Button Content="Exit" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75"  Style="{StaticResource Darkmodebtn}" Command="{Binding ExitWindowCommand}"/>
-        <Button Content="Enter" HorizontalAlignment="Right" Margin="207,122,10,10" VerticalAlignment="Bottom" Width="75" Style="{StaticResource Darkmodebtn}" Command="{Binding EnterWindowCommand}"/>
-        <TextBox Height="23" Margin="85,55,87,74" TextWrapping="Wrap" Width="120" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" Cursor="Pen" Style="{StaticResource Darkmodetxt}" HorizontalAlignment="Center">
-            <TextBox.OpacityMask>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black" Offset="0"/>
-                    <GradientStop Color="White" Offset="1"/>
-                </LinearGradientBrush>
-            </TextBox.OpacityMask>
-        </TextBox>
-        <TextBlock HorizontalAlignment="Center" Margin="85,31,87,0" Text="Port:" VerticalAlignment="Top" Style="{StaticResource Darkmodetitle}" Width="120"/>
-        <TextBlock Margin="57,89,57,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource Darkmodetitle}" Foreground="#FFE40A00" Text="Enter a valid port"/>
+        <Button Content="Enter" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Style="{StaticResource Darkmodebtn}" Command="{Binding EnterWindowCommand}"/>
+        <TextBox Height="23" Margin="10,30,0,0" TextWrapping="Wrap" Width="178" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Cursor="Pen" Style="{StaticResource Darkmodetxt}" AutomationProperties.HelpText="Port"/>
+        <TextBox Height="23" Margin="10,95,0,0" TextWrapping="Wrap" Width="178" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Cursor="Pen" Style="{StaticResource Darkmodetxt}" AutomationProperties.HelpText="Port"/>
+        <TextBox Height="23" Margin="10,165,0,0" TextWrapping="Wrap" Width="178" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Cursor="Pen" Style="{StaticResource Darkmodetxt}" AutomationProperties.HelpText="Port"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Port:" VerticalAlignment="Top" Style="{StaticResource Darkmodetitle}" Width="120" TextAlignment="Left"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,75,0,0" Text="IP Address:" VerticalAlignment="Top" Style="{StaticResource Darkmodetitle}" Width="120" TextAlignment="Left"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,145,0,0" Text="Username:" VerticalAlignment="Top" Style="{StaticResource Darkmodetitle}" Width="120" TextAlignment="Left"/>
+        <TextBlock Margin="10,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource Darkmodetitle}" Foreground="#FFE40A00" Text="Invalid port"/>
+        <TextBlock Margin="10,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource Darkmodetitle}" Foreground="#FFE40A00" Text="Invalid IP address"/>
+        <TextBlock Margin="10,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource Darkmodetitle}" Foreground="#FFE40A00" Text="Invalid Username"/>
+        <RadioButton Content="Listen" HorizontalAlignment="Left" Margin="197,11,0,0" VerticalAlignment="Top" IsChecked="True" Style="{StaticResource Darkmoderadio}"/>
+        <RadioButton Content="Connect" HorizontalAlignment="Left" Margin="197,39,0,0" VerticalAlignment="Top" Style="{StaticResource Darkmoderadio}"/>
     </Grid>
 </Window>

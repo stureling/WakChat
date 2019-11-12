@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WpfApp2.Viewmodels.Commands;
+using WpfApp2.Views;
 
 namespace WpfApp2.Viewmodels
 {
@@ -32,7 +33,7 @@ namespace WpfApp2.Viewmodels
         public void EnterClick()
         {
             Debug.WriteLine("Enter Client");
-            MainWindow newWindow = new MainWindow();
+            ChatWindow newWindow = new ChatWindow();
             newWindow.Show();
             this.window.Close();
         }

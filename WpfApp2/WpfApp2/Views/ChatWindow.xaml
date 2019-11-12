@@ -1,20 +1,18 @@
-﻿<Window x:Class="WpfApp2.MainWindow"
+﻿<Window x:Class="WpfApp2.Views.ChatWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp2"
+        xmlns:local="clr-namespace:WpfApp2.Views"
         mc:Ignorable="d"
         Title="Slackchat" Height="450" Width="800"
-        Style="{StaticResource Darkmodebg}">
+        Style="{StaticResource Darkmodebg}" Visibility="Visible" WindowStyle="None">
     <Grid>
         <Grid HorizontalAlignment="Left" Height="238" Margin="29,55,0,0" VerticalAlignment="Top" Width="732">
             <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Gurra: Tjännna hur e läget. Ska vi dra å kolla på fotboll på torsdag och ta en bira? MVH" VerticalAlignment="Top" Height="47" Width="712" Style="{StaticResource Darkmodemessage}"/>
         </Grid>
-
         <Button Content="Send" HorizontalAlignment="Left" Height="75" Margin="714,334,0,0" VerticalAlignment="Top" Width="68" Style="{StaticResource Darkmodebtn}"/>
         <TextBox HorizontalAlignment="Left" Height="75" Margin="10,334,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="699" Style="{StaticResource Darkmodetxt}"/>
-
     </Grid>
 
 </Window>
