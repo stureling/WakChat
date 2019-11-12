@@ -8,6 +8,13 @@
         Title="Slackchat" Height="450" Width="800"
         Style="{StaticResource Darkmodebg}">
     <Grid>
-        
+        <Grid HorizontalAlignment="Left" Height="238" Margin="29,55,0,0" VerticalAlignment="Top" Width="732">
+            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Gurra: Tjännna hur e läget. Ska vi dra å kolla på fotboll på torsdag och ta en bira? MVH" VerticalAlignment="Top" Height="47" Width="712" Style="{StaticResource Darkmodemessage}"/>
+        </Grid>
+
+        <Button Content="Send" HorizontalAlignment="Left" Height="75" Margin="714,334,0,0" VerticalAlignment="Top" Width="68" Style="{StaticResource Darkmodebtn}"/>
+        <TextBox HorizontalAlignment="Left" Height="75" Margin="10,334,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="699" Style="{StaticResource Darkmodetxt}"/>
+
     </Grid>
+
 </Window>

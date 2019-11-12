@@ -24,17 +24,7 @@ namespace WpfApp2.Views
         {
             InitializeComponent();
 
-            //DataContext = new LoginViewmodel();
-        }
-
-        private void Enter_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
+            DataContext = new LoginViewmodel(this);
         }
     }
 }

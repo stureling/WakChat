@@ -12,7 +12,7 @@ namespace WpfApp2
         {
             InitializeComponent();
 
-            DataContext = new LoginViewmodel();
+            DataContext = new LoginViewmodel(this);
         }
     }
 }

@@ -7,14 +7,10 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vm:LoginViewmodel, IsDesignTimeCreatable=True}" 
         Title="Login" Height="160" Width="300" Style="{StaticResource Darkmodebg}" WindowStyle="None">
-    <Window.DataContext>
-        <vm:LoginViewmodel />
-    </Window.DataContext>
     <Grid Margin="-1,0,1,0" Cursor="Arrow">
         <Button Content="Exit" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75"  Style="{StaticResource Darkmodebtn}" Command="{Binding ExitWindowCommand}"/>
-        <Button Content="Enter" HorizontalAlignment="Right" Click="Enter_Click" Margin="207,122,10,10" VerticalAlignment="Bottom" Width="75" Style="{StaticResource Darkmodebtn}"/>
-        <TextBox Height="23" Margin="86,34,86,95" TextWrapping="Wrap" Width="120" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" Cursor="Pen" Style="{StaticResource Darkmodetxt}" HorizontalAlignment="Center"/>
-        <TextBox Height="23" Margin="86,84,86,45" TextWrapping="Wrap" Width="120" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" Cursor="Pen" Style="{StaticResource Darkmodetxt}" HorizontalAlignment="Center">
+        <Button Content="Enter" HorizontalAlignment="Right" Margin="207,122,10,10" VerticalAlignment="Bottom" Width="75" Style="{StaticResource Darkmodebtn}" Command="{Binding EnterWindowCommand}"/>
+        <TextBox Height="23" Margin="85,55,87,74" TextWrapping="Wrap" Width="120" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" Cursor="Pen" Style="{StaticResource Darkmodetxt}" HorizontalAlignment="Center">
             <TextBox.OpacityMask>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0"/>
@@ -22,7 +18,7 @@
                 </LinearGradientBrush>
             </TextBox.OpacityMask>
         </TextBox>
-        <TextBlock HorizontalAlignment="Center" Margin="118,17,117,0" TextWrapping="Wrap" Text="Username:" VerticalAlignment="Top" Width="57" Style="{StaticResource Darkmodetitle}"/>
-        <TextBlock HorizontalAlignment="Center" Margin="129,67,131,0" TextWrapping="Wrap" Text="Port:" VerticalAlignment="Top" Style="{StaticResource Darkmodetitle}"/>
+        <TextBlock HorizontalAlignment="Center" Margin="85,31,87,0" Text="Port:" VerticalAlignment="Top" Style="{StaticResource Darkmodetitle}" Width="120"/>
+        <TextBlock Margin="57,89,57,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource Darkmodetitle}" Foreground="#FFE40A00" Text="Enter a valid port"/>
     </Grid>
 </Window>

@@ -7,11 +7,11 @@ using System.Windows.Input;
 
 namespace WpfApp2.Viewmodels.Commands
 {
-    public class ExitWindowCommand : ICommand
+    public class EnterWindowCommand : ICommand
     {
         public LoginViewmodel ViewModel { get; set; }
 
-        public ExitWindowCommand(LoginViewmodel viewModel)
+        public EnterWindowCommand(LoginViewmodel viewModel)
         {
             this.ViewModel = viewModel;
         }
@@ -22,10 +22,10 @@ namespace WpfApp2.Viewmodels.Commands
         {
             return true;
         }
-        
+
         public void Execute(object parameter)
         {
-            this.ViewModel.ExitClick();
+            this.ViewModel.EnterClick();
         }
     }
 }
