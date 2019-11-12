@@ -9,9 +9,9 @@ namespace WpfApp2.Viewmodels.Commands
 {
     public class EnterWindowCommand : ICommand
     {
-        public LoginViewmodel ViewModel { get; set; }
+        public BaseViewmodel ViewModel { get; set; }
 
-        public EnterWindowCommand(LoginViewmodel viewModel)
+        public EnterWindowCommand(BaseViewmodel viewModel)
         {
             this.ViewModel = viewModel;
         }

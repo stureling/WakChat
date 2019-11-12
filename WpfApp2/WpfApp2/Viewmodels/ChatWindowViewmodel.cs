@@ -11,12 +11,12 @@ using WpfApp2.Views;
 
 namespace WpfApp2.Viewmodels
 {
-    public class LoginViewmodel : BaseViewmodel
+    public class ChatWindowViewmodel : BaseViewmodel
     {
         public ICommand ExitWindowCommand { get; set; }
         public ICommand EnterWindowCommand { get; set; }
 
-        public LoginViewmodel(Window window) : base(window)
+        public ChatWindowViewmodel(Window window):base(window)
         {
             this.ExitWindowCommand = new ExitWindowCommand(this);
             this.EnterWindowCommand = new EnterWindowCommand(this);

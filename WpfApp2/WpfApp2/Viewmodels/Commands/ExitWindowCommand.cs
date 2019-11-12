@@ -9,9 +9,9 @@ namespace WpfApp2.Viewmodels.Commands
 {
     public class ExitWindowCommand : ICommand
     {
-        public LoginViewmodel ViewModel { get; set; }
+        public BaseViewmodel ViewModel { get; set; }
 
-        public ExitWindowCommand(LoginViewmodel viewModel)
+        public ExitWindowCommand(BaseViewmodel viewModel)
         {
             this.ViewModel = viewModel;
         }

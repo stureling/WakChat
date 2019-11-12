@@ -117,6 +117,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Viewmodels\BaseViewmodel.cs" />
+    <Compile Include="Viewmodels\ChatWindowViewmodel.cs" />
     <Compile Include="Viewmodels\Commands\EnterWindowCommand.cs" />
     <Compile Include="Viewmodels\Commands\ExitWindowCommand.cs" />
     <Compile Include="Viewmodels\LoginViewmodel.cs" />
