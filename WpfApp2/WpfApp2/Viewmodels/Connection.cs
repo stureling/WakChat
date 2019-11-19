@@ -87,10 +87,18 @@ namespace WpfApp2.Viewmodels
                     // Creates message box to inform user of connected 
                     MessageBoxResult result = MessageBox.Show("Potential friend found. Accept?", "Alert", MessageBoxButton.YesNo);
 
+                    if (result == MessageBoxResult.No)
+                    {
+                        Console.WriteLine("Not accepted");
+                        break;
+                    }
+
+                    Console.WriteLine("Connected!");
+
                     data = null;
 
                     // Get a stream object for reading and writing
-                    NetworkStream _stream = _client.GetStream();
+                     _stream = _client.GetStream();
 
                     int i;
 
@@ -112,7 +120,7 @@ namespace WpfApp2.Viewmodels
                     }
 
                     // Shutdown and end connection
-                    _client.Close();
+                    _server.Stop();
                 }
             }
             catch (SocketException e)
