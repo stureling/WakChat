@@ -13,6 +13,7 @@ namespace WpfApp2.Viewmodels
 {
     public class LoginViewmodel : BaseViewmodel
     {
+        int port;
         public ICommand ExitWindowCommand { get; set; }
         public ICommand EnterWindowCommand { get; set; }
 
@@ -20,6 +21,19 @@ namespace WpfApp2.Viewmodels
         {
             this.ExitWindowCommand = new ExitWindowCommand(this);
             this.EnterWindowCommand = new EnterWindowCommand(this);
+        }
+
+        public int PortNR
+        {
+            get
+            {
+                return port;
+            }
+
+            set
+            {
+                port = value;
+            }
         }
     }
 }

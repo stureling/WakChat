@@ -13,9 +13,10 @@
     <Grid Margin="-1,0,1,0" Cursor="Arrow">
         <Button Content="Exit" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75"  Style="{StaticResource Darkmodebtn}" Command="{Binding ExitWindowCommand}"/>
         <Button Content="Enter" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Style="{StaticResource Darkmodebtn}" Command="{Binding EnterWindowCommand}"/>
-        <TextBox Height="23" Margin="10,30,0,0" TextWrapping="Wrap" Width="178" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Cursor="Pen" Style="{StaticResource Darkmodetxt}" AutomationProperties.HelpText="Port"/>
+        <TextBox Height="23" Margin="10,30,0,0" TextWrapping="Wrap" Width="178" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Cursor="Pen" Style="{StaticResource Darkmodetxt}" AutomationProperties.HelpText="Port" Text="{Binding PortNr}"/>
         <TextBox Height="23" Margin="10,95,0,0" TextWrapping="Wrap" Width="178" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Cursor="Pen" Style="{StaticResource Darkmodetxt}" AutomationProperties.HelpText="Port"/>
-        <TextBox Height="23" Margin="10,160,0,0" TextWrapping="Wrap" Width="178" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Cursor="Pen" Style="{StaticResource Darkmodetxt}" AutomationProperties.HelpText="Port" Visibility="{Binding IsChecked,ElementName=ConnectBtn,Converter={StaticResource b2v}}"/>
+        <TextBox Height="23" Margin="10,160,0,0" TextWrapping="Wrap" Width="178" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Cursor="Pen" Style="{StaticResource Darkmodetxt}" AutomationProperties.HelpText="Port"
+                 Visibility="{Binding IsChecked,ElementName=ConnectBtn,Converter={StaticResource b2v}"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Port:" VerticalAlignment="Top" Style="{StaticResource Darkmodetitle}" Width="120" TextAlignment="Left"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,75,0,0" Text="Username:" VerticalAlignment="Top" Style="{StaticResource Darkmodetitle}" Width="120" TextAlignment="Left"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,140,0,0" Text="IP address:" VerticalAlignment="Top" Style="{StaticResource Darkmodetitle}" Width="120" TextAlignment="Left" Visibility="{Binding IsChecked,ElementName=ConnectBtn,Converter={StaticResource b2v}}"/>
