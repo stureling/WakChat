@@ -12,52 +12,16 @@ namespace WpfApp2.Viewmodels
 {
     class Connection
     {
-        private TcpListener _server = null;
-        private TcpClient _client;
-        private NetworkStream _stream;
         public Connection()
         {
             Success = false;
         }
 
-        public TcpClient Client
-        {
-            get
-            {
-                return _client;
-            }
+        public TcpClient Client { get; set; }
 
-            set
-            {
-                _client = value;
-            }
-        }
+        public TcpListener Server { get; set; } = null;
 
-        public TcpListener Server
-        {
-            get
-            {
-                return _server;
-            }
-
-            set
-            {
-                _server = value;
-            }
-        }
-
-        public NetworkStream ServerStream
-        {
-            get
-            {
-                return _stream;
-            }
-
-            set
-            {
-                _stream = value;
-            }
-        }
+        public NetworkStream ServerStream { get; set; }
 
         public bool Success { get; private set; }
 
@@ -68,10 +32,10 @@ namespace WpfApp2.Viewmodels
                 IPAddress localAddr = IPAddress.Parse("127.0.0.1");
 
                 // TcpListener server = new TcpListener(port);
-                _server = new TcpListener(localAddr, port);
+                Server = new TcpListener(localAddr, port);
 
                 // Start listening for client requests.
-                _server.Start();
+                Server.Start();
 
                 // Buffer for reading data
                 Byte[] bytes = new Byte[256];
@@ -83,7 +47,7 @@ namespace WpfApp2.Viewmodels
                     Debug.Write("Waiting for a connection... ");
 
                     //Accept a connection
-                    TcpClient _client = _server.AcceptTcpClient();
+                    TcpClient _client = Server.AcceptTcpClient();
 
                     data = null;
 
@@ -126,7 +90,7 @@ namespace WpfApp2.Viewmodels
             finally
             {
                 // Stop listening for new clients.
-                _server.Stop();
+                Server.Stop();
             }
         }
 
@@ -181,7 +145,7 @@ namespace WpfApp2.Viewmodels
         }
         public void Send(string message)
         {
-            NetworkStream _stream = _client.GetStream();
+            NetworkStream _stream = Client.GetStream();
         }
     }
 }
