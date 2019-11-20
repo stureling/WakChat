@@ -16,9 +16,12 @@ namespace WpfApp2.Viewmodels
     public class LoginViewmodel : BaseViewmodel
     {
 
-        private int _port;
-        private string _username;
-        private string _ip;
+        private int _port = 0;
+        private string _username = "";
+        private string _ip = "";
+        private bool _enableConnect;
+        private bool _enableListen;
+
         public int Port
         {
             get 
@@ -89,48 +92,51 @@ namespace WpfApp2.Viewmodels
             }
         }
 
+        public bool EnableConnect
+        {
+            get 
+            {
+                return _enableConnect;
+            }
+            set
+            {
+                if (String.IsNullOrWhiteSpace(_username) || String.IsNullOrWhiteSpace(_ip) || String.IsNullOrWhiteSpace(_port.ToString()))
+                {
+                    _enableConnect = false;
+                }
+                else
+                {
+                    _enableConnect = true;
+                }
+            }
+        }
+
+        public bool EnableListen
+        {
+            get
+            {
+                return _enableListen;
+            }
+            set
+            {
+                if (String.IsNullOrWhiteSpace(_username) || String.IsNullOrWhiteSpace(_port.ToString()))
+                {
+                    _enableListen = false;
+                }
+                else
+                {
+                    _enableListen = true;
+                }
+            }
+        }
+
         public ICommand ExitWindowCommand { get; set; }
         public ICommand EnterWindowCommand { get; set; }
-        public ICommand ConnectCommand { get; set; }
-        public ICommand ListenCommand { get; set; }
 
-        public LoginViewmodel()
+        public LoginViewmodel(Window window) : base(window)
         {
             this.ExitWindowCommand = new ExitWindowCommand(this);
             this.EnterWindowCommand = new EnterWindowCommand(this);
-            this.ListenCommand = new ListenCommand(this);
-            this.ConnectCommand = new ConnectCommand(this);
-        }
-
-        public void Connect()
-        {
-            Connection connection = new Connection();
-            connection.Connect(_port, _ip, _username);
-            if (connection.Success)
-            {
-                //continue to chat screen
-                MessageBox.Show("Continue to chat window", "Alert", MessageBoxButton.OK);
-            }
-            else
-            {
-                //stay on this screen
-                MessageBox.Show("Staying on this screen", "Alert", MessageBoxButton.OK);
-            }
-        }
-        public void Listen()
-        {
-            Connection connection = new Connection();
-            connection.Listen(_port);
-            if (connection.Success)
-            {
-                //continue to chat screen
-                MessageBox.Show("Continue to chat window", "Alert", MessageBoxButton.OK);
-            }
-            else
-            {
-                //stay on this screen
-                MessageBox.Show("Staying on this screen", "Alert", MessageBoxButton.OK);
-            }
         }
     }
 }

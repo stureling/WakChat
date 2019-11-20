@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace WpfApp2.Viewmodels.Commands
@@ -21,13 +20,12 @@ namespace WpfApp2.Viewmodels.Commands
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            return false;
         }
 
         public void Execute(object parameter)
         {
-            Window window = (Window)parameter;
-            this.ViewModel.EnterClick(window);
+            this.ViewModel.EnterClick();
         }
     }
 }

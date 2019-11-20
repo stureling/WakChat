@@ -12,11 +12,12 @@
         <BooleanToVisibilityConverter x:Key="b2v" />
     </Window.Resources>
     <Grid Margin="-1,0,1,0" Cursor="Arrow">
-        <Button Content="Exit" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75"  Style="{StaticResource Darkmodebtn}" Command="{Binding ExitWindowCommand}" CommandParameter="{x:Reference Name=LoginWindow}"/>
-        <Button Content="Connect" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Style="{StaticResource Darkmodebtn}" Command="{Binding ConnectCommand}" 
-                Visibility="{Binding IsChecked,ElementName=ConnectBtn,Converter={StaticResource b2v}}"/>
-        <Button Content="Listen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Style="{StaticResource Darkmodebtn}" Command="{Binding ListenCommand}" 
-                Visibility="{Binding IsChecked,ElementName=ListenBtn,Converter={StaticResource b2v}}"/>
+        <Button Content="Exit" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75"  Style="{StaticResource Darkmodebtn}" Command="{Binding ExitWindowCommand}"
+				CommandParameter="{x:Reference Name=LoginWindow}"/>
+        <Button Content="Connect" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Style="{StaticResource Darkmodebtn}"
+                Command="{Binding ConnectCommand}" Visibility="{Binding IsChecked,ElementName=ConnectBtn,Converter={StaticResource b2v}}" IsEnabled="{Binding Path=EnableConnect}"/>
+        <Button Content="Listen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Style="{StaticResource Darkmodebtn}"
+                Command="{Binding ListenCommand}" Visibility="{Binding IsChecked,ElementName=ListenBtn,Converter={StaticResource b2v}}" IsEnabled="{Binding Path=EnableListen}"/>
         <TextBox Name="PortBox" Height="23" Margin="10,30,0,0" TextWrapping="Wrap" Width="178" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Cursor="Pen"
                  Style="{StaticResource Darkmodetxt}" AutomationProperties.HelpText="Port" Text="{Binding Path=Port}"/>
         <TextBox Height="23" Margin="10,95,0,0" TextWrapping="Wrap" Width="178" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Cursor="Pen"
@@ -27,10 +28,11 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Port:" VerticalAlignment="Top" Style="{StaticResource Darkmodetitle}" Width="120" TextAlignment="Left"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,75,0,0" Text="Username:" VerticalAlignment="Top" Style="{StaticResource Darkmodetitle}" Width="120" TextAlignment="Left"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,140,0,0" Text="IP address:" VerticalAlignment="Top" Style="{StaticResource Darkmodetitle}" Width="120" TextAlignment="Left" Visibility="{Binding IsChecked,ElementName=ConnectBtn,Converter={StaticResource b2v}}"/>
-        <TextBlock Margin="10,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource Darkmodetitle}" Foreground="#FFE40A00" Text="Invalid port"/>
-        <TextBlock Margin="10,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource Darkmodetitle}" Foreground="#FFE40A00" Text="Invalid Username"/>
-        <TextBlock Margin="10,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource Darkmodetitle}" Foreground="#FFE40A00" Text="Invalid IP address" Visibility="{Binding IsChecked,ElementName=ConnectBtn,Converter={StaticResource b2v}}"/>
-        <RadioButton Content="Listen" HorizontalAlignment="Left" Margin="210,10,0,0" VerticalAlignment="Top" IsChecked="True" Style="{StaticResource Darkmoderadio}" DataContext="{Binding RadioCommand}" Name="ListenBtn"/>
-        <RadioButton Content="Connect" HorizontalAlignment="Left" Margin="210,30,0,0" VerticalAlignment="Top" Style="{StaticResource Darkmoderadio}" DataContext="{Binding RadioCommand}" Name="ConnectBtn"/>
+        <TextBlock Margin="10,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource Darkmodetitle}" Foreground="#FFE40A00"
+                   Text="Invalid input" Visibility="{Binding IsChecked,ElementName=ConnectBtn,Converter={StaticResource b2v}}"/>
+        <TextBlock Margin="10,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource Darkmodetitle}" Foreground="#FFE40A00"
+                   Text="Invalid input" Visibility="{Binding IsChecked,ElementName=ListenBtn,Converter={StaticResource b2v}}"/>
+        <RadioButton Content="Listen" HorizontalAlignment="Left" Margin="210,10,0,0" VerticalAlignment="Top" IsChecked="True" Style="{StaticResource Darkmoderadio}" Name="ListenBtn"/>
+        <RadioButton Content="Connect" HorizontalAlignment="Left" Margin="210,30,0,0" VerticalAlignment="Top" Style="{StaticResource Darkmoderadio}" Name="ConnectBtn"/>
     </Grid>
 </Window>
