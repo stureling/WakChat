@@ -13,15 +13,14 @@ namespace WpfApp2.Viewmodels
     {
         public Window window;
 
-        public BaseViewmodel(Window window)
+        public BaseViewmodel()
         {
-            this.window = window;
         }
 
-        public void ExitClick()
+        public void ExitClick(Window window)
         {
             Debug.WriteLine("Closing Window");
-            this.window.Close();
+            window.Close();
         }
         public void EnterClick()
         {

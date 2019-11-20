@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -20,7 +21,7 @@ namespace WpfApp2.Viewmodels
 
         }
 
-        public TcpClient Client 
+        public TcpClient Client
         {
             get
             {
@@ -59,6 +60,7 @@ namespace WpfApp2.Viewmodels
             }
         }
 
+
         public void Listen(int port)
         {
             try
@@ -78,49 +80,41 @@ namespace WpfApp2.Viewmodels
                 // Enter the listening loop.
                 while (true)
                 {
-                    Console.Write("Waiting for a connection... ");
+                    Debug.Write("Waiting for a connection... ");
 
-                    // Perform a blocking call to accept requests.
-                    // You could also user server.AcceptSocket() here.
+                    //Accept a connection
                     TcpClient _client = _server.AcceptTcpClient();
-
-                    // Creates message box to inform user of connected 
-                    MessageBoxResult result = MessageBox.Show("Potential friend found. Accept?", "Alert", MessageBoxButton.YesNo);
-
-                    if (result == MessageBoxResult.No)
-                    {
-                        Console.WriteLine("Not accepted");
-                        break;
-                    }
-
-                    Console.WriteLine("Connected!");
 
                     data = null;
 
                     // Get a stream object for reading and writing
-                     _stream = _client.GetStream();
+                    NetworkStream _stream = _client.GetStream();
 
                     int i;
+                    i = _stream.Read(bytes, 0, bytes.Length);
 
-                    // Loop to receive all the data sent by the client.
-                    while ((i = _stream.Read(bytes, 0, bytes.Length)) != 0)
+                    data = System.Text.Encoding.UTF8.GetString(bytes, 0, i);
+                    Debug.WriteLine($"Received: {data}");
+
+                    // Creates message box to inform user of connected 
+                    MessageBoxResult result = MessageBox.Show($"User {data} wishes to connect, Accept?", "Alert", MessageBoxButton.YesNo);
+
+                    if (result == MessageBoxResult.Yes)
                     {
-                        // Translate data bytes to a ASCII string.
-                        data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
-                        Console.WriteLine("Received: {0}", data);
-
-                        // Process the data sent by the client.
-                        data = data.ToUpper();
-
-                        byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
-
-                        // Send back a response.
+                        // Send back a response.                        
+                        byte[] msg = System.Text.Encoding.UTF8.GetBytes("accept");
                         _stream.Write(msg, 0, msg.Length);
-                        Console.WriteLine("Sent: {0}", data);
+                        Debug.WriteLine($"Sent: {data}");
+                        break;
                     }
-
-                    // Shutdown and end connection
-                    _server.Stop();
+                    else if (result == MessageBoxResult.No)
+                    {
+                        // Send back a response.                        
+                        byte[] msg = System.Text.Encoding.UTF8.GetBytes("deny");
+                        _stream.Write(msg, 0, msg.Length);
+                        Debug.WriteLine($"Sent: {data}");
+                        _client.Close();
+                    }
                 }
             }
             catch (SocketException e)
@@ -132,51 +126,41 @@ namespace WpfApp2.Viewmodels
                 // Stop listening for new clients.
                 _server.Stop();
             }
-
-
-            Console.WriteLine("\nHit enter to continue...");
-            Console.Read();
         }
 
-        public void Connect(int port, String username)
+        public void Connect(int port, string ipAddress, string username)
         {
             try
             {
-                // Create a TcpClient.
-                // Note, for this client to work you need to have a TcpServer 
-                // connected to the same address as specified by the server, port
-                // combination.
-                TcpClient _client = new TcpClient(username, port);
+                IPAddress serverIP = IPAddress.Parse(ipAddress);
+                TcpClient _client = new TcpClient();
+                _client.Connect(serverIP, port);
 
-                // Translate the passed message into ASCII and store it as a Byte array.
-                Byte[] data = System.Text.Encoding.ASCII.GetBytes(username);
+                // Encode username to bytearray
+                byte[] data = Encoding.UTF8.GetBytes(username);
 
                 // Get a client stream for reading and writing.
-                //  Stream stream = client.GetStream();
-
                 NetworkStream _stream = _client.GetStream();
 
-                // Send the message to the connected TcpServer. 
+                //// Send the message to the connected TcpServer. 
                 _stream.Write(data, 0, data.Length);
-
-                Console.WriteLine("Sent: {0}", username);
-
-                // Receive the TcpServer.response.
 
                 // Buffer to store the response bytes.
                 data = new Byte[256];
 
-                // String to store the response ASCII representation.
+                // String to store the response UTF8 representation.
                 String responseData = String.Empty;
 
-                // Read the first batch of the TcpServer response bytes.
+                //// Read the first batch of the TcpServer response bytes.
                 Int32 bytes = _stream.Read(data, 0, data.Length);
-                responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                Console.WriteLine("Received: {0}", responseData);
-
-                // Close everything.
-                _stream.Close();
-                _client.Close();
+                responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+                Console.WriteLine($"Received: {responseData}");
+                if (responseData == "deny")
+                {
+                    // go back to connection window if denied
+                    MessageBox.Show("Connection denied by host", "Alert", MessageBoxButton.OK);
+                    _client.Close();
+                }
             }
             catch (ArgumentNullException e)
             {
@@ -185,10 +169,12 @@ namespace WpfApp2.Viewmodels
             catch (SocketException e)
             {
                 Console.WriteLine("SocketException: {0}", e);
+                //Tell the user that the connection was refused. Probably due to no host listening on the provided port and IP combination.
             }
-
-            Console.WriteLine("\n Press Enter to continue...");
-            Console.Read();
+        }
+        public void Send(string message)
+        {
+            NetworkStream _stream = _client.GetStream();
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace WpfApp2.Viewmodels.Commands
@@ -25,7 +27,8 @@ namespace WpfApp2.Viewmodels.Commands
         
         public void Execute(object parameter)
         {
-            this.ViewModel.ExitClick();
+            Window window = (Window)parameter;
+            this.ViewModel.ExitClick(window);
         }
     }
 }

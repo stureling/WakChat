@@ -24,7 +24,7 @@ namespace WpfApp2.Views
         {
             InitializeComponent();
 
-            DataContext = new LoginViewmodel(this);
+            DataContext = new LoginViewmodel();
         }
     }
 }

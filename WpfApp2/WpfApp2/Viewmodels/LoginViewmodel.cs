@@ -92,10 +92,37 @@ namespace WpfApp2.Viewmodels
         public ICommand ExitWindowCommand { get; set; }
         public ICommand EnterWindowCommand { get; set; }
 
-        public LoginViewmodel(Window window) : base(window)
+        public LoginViewmodel()
         {
             this.ExitWindowCommand = new ExitWindowCommand(this);
             this.EnterWindowCommand = new EnterWindowCommand(this);
+        }
+
+        public void Connect()
+        {
+            Connection connection = new Connection();
+            connection.Connect(_port, _ip, _username);
+            if (connection.Client.Connected)
+            {
+                //continue to chat screen
+            }
+            else
+            {
+                //stay on this screen
+            }
+        }
+        public void Listen()
+        {
+            Connection connection = new Connection();
+            connection.Listen(_port);
+            if (connection.Client.Connected)
+            {
+                //continue to chat screen
+            }
+            else
+            {
+                //stay on this screen
+            }
         }
     }
 }
