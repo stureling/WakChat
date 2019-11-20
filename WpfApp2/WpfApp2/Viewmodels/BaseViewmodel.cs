@@ -22,12 +22,12 @@ namespace WpfApp2.Viewmodels
             Debug.WriteLine("Closing Window");
             window.Close();
         }
-        public void EnterClick()
+        public void EnterClick(Window window)
         {
             Debug.WriteLine("Enter Client");
             ChatWindow newWindow = new ChatWindow();
             newWindow.Show();
-            this.window.Close();
+            window.Close();
         }
     }
 }

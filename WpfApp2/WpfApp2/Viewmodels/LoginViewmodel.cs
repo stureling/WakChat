@@ -91,37 +91,45 @@ namespace WpfApp2.Viewmodels
 
         public ICommand ExitWindowCommand { get; set; }
         public ICommand EnterWindowCommand { get; set; }
+        public ICommand ConnectCommand { get; set; }
+        public ICommand ListenCommand { get; set; }
 
         public LoginViewmodel()
         {
             this.ExitWindowCommand = new ExitWindowCommand(this);
             this.EnterWindowCommand = new EnterWindowCommand(this);
+            this.ListenCommand = new ListenCommand(this);
+            this.ConnectCommand = new ConnectCommand(this);
         }
 
         public void Connect()
         {
             Connection connection = new Connection();
             connection.Connect(_port, _ip, _username);
-            if (connection.Client.Connected)
+            if (connection.Success)
             {
                 //continue to chat screen
+                MessageBox.Show("Continue to chat window", "Alert", MessageBoxButton.OK);
             }
             else
             {
                 //stay on this screen
+                MessageBox.Show("Staying on this screen", "Alert", MessageBoxButton.OK);
             }
         }
         public void Listen()
         {
             Connection connection = new Connection();
             connection.Listen(_port);
-            if (connection.Client.Connected)
+            if (connection.Success)
             {
                 //continue to chat screen
+                MessageBox.Show("Continue to chat window", "Alert", MessageBoxButton.OK);
             }
             else
             {
                 //stay on this screen
+                MessageBox.Show("Staying on this screen", "Alert", MessageBoxButton.OK);
             }
         }
     }

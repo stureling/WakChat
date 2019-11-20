@@ -15,10 +15,9 @@ namespace WpfApp2.Viewmodels
         private TcpListener _server = null;
         private TcpClient _client;
         private NetworkStream _stream;
-
         public Connection()
         {
-
+            Success = false;
         }
 
         public TcpClient Client
@@ -60,6 +59,7 @@ namespace WpfApp2.Viewmodels
             }
         }
 
+        public bool Success { get; private set; }
 
         public void Listen(int port)
         {
@@ -105,6 +105,7 @@ namespace WpfApp2.Viewmodels
                         byte[] msg = System.Text.Encoding.UTF8.GetBytes("accept");
                         _stream.Write(msg, 0, msg.Length);
                         Debug.WriteLine($"Sent: {data}");
+                        Success = true;
                         break;
                     }
                     else if (result == MessageBoxResult.No)
@@ -113,6 +114,7 @@ namespace WpfApp2.Viewmodels
                         byte[] msg = System.Text.Encoding.UTF8.GetBytes("deny");
                         _stream.Write(msg, 0, msg.Length);
                         Debug.WriteLine($"Sent: {data}");
+                        Success = false;
                         _client.Close();
                     }
                 }
@@ -160,6 +162,11 @@ namespace WpfApp2.Viewmodels
                     // go back to connection window if denied
                     MessageBox.Show("Connection denied by host", "Alert", MessageBoxButton.OK);
                     _client.Close();
+                    Success = false;
+                }
+                else
+                {
+                    Success = true;
                 }
             }
             catch (ArgumentNullException e)
