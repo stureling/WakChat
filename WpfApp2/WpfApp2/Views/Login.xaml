@@ -1,4 +1,5 @@
 ﻿<Window x:Class="WpfApp2.Views.Login"
+        x:Name="LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,11 +12,12 @@
         <BooleanToVisibilityConverter x:Key="b2v" />
     </Window.Resources>
     <Grid Margin="-1,0,1,0" Cursor="Arrow">
-        <Button Content="Exit" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75"  Style="{StaticResource Darkmodebtn}" Command="{Binding ExitWindowCommand}"/>
+        <Button Content="Exit" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75"  Style="{StaticResource Darkmodebtn}" Command="{Binding ExitWindowCommand}"
+				CommandParameter="{x:Reference Name=LoginWindow}"/>
         <Button Content="Connect" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Style="{StaticResource Darkmodebtn}"
-                Visibility="{Binding IsChecked,ElementName=ConnectBtn,Converter={StaticResource b2v}}" IsEnabled="{Binding Path=EnableConnect}"/>
+                Command="{Binding ConnectCommand}" Visibility="{Binding IsChecked,ElementName=ConnectBtn,Converter={StaticResource b2v}}" IsEnabled="{Binding Path=EnableConnect}"/>
         <Button Content="Listen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Style="{StaticResource Darkmodebtn}"
-                Visibility="{Binding IsChecked,ElementName=ListenBtn,Converter={StaticResource b2v}}" IsEnabled="{Binding Path=EnableListen}"/>
+                Command="{Binding ListenCommand}" Visibility="{Binding IsChecked,ElementName=ListenBtn,Converter={StaticResource b2v}}" IsEnabled="{Binding Path=EnableListen}"/>
         <TextBox Name="PortBox" Height="23" Margin="10,30,0,0" TextWrapping="Wrap" Width="178" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Cursor="Pen"
                  Style="{StaticResource Darkmodetxt}" AutomationProperties.HelpText="Port" Text="{Binding Path=Port}"/>
         <TextBox Height="23" Margin="10,95,0,0" TextWrapping="Wrap" Width="178" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Cursor="Pen"

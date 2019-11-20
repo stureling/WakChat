@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace WpfApp2.Viewmodels.Commands
 {
-    public class ExitWindowCommand : ICommand
+    public class EnterWindowCommand : ICommand
     {
         public BaseViewmodel ViewModel { get; set; }
 
-        public ExitWindowCommand(BaseViewmodel viewModel)
+        public EnterWindowCommand(BaseViewmodel viewModel)
         {
             this.ViewModel = viewModel;
         }
@@ -22,13 +20,12 @@ namespace WpfApp2.Viewmodels.Commands
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            return false;
         }
-        
+
         public void Execute(object parameter)
         {
-            Window window = (Window)parameter;
-            this.ViewModel.ExitClick(window);
+            this.ViewModel.EnterClick();
         }
     }
 }

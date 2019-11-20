@@ -16,7 +16,7 @@ namespace WpfApp2.Viewmodels
         public ICommand ExitWindowCommand { get; set; }
         public ICommand EnterWindowCommand { get; set; }
 
-        public ChatWindowViewmodel(Window window):base(window)
+        public ChatWindowViewmodel()
         {
             this.ExitWindowCommand = new ExitWindowCommand(this);
             this.EnterWindowCommand = new EnterWindowCommand(this);
