@@ -19,9 +19,7 @@ namespace WpfApp2.Viewmodels
 
         public TcpClient Client { get; set; }
 
-        public TcpListener Server { get; set; } = null;
-
-        public NetworkStream ServerStream { get; set; }
+        public TcpListener Server { get; set; }
 
         public bool Success { get; private set; }
 
@@ -47,15 +45,15 @@ namespace WpfApp2.Viewmodels
                     Debug.Write("Waiting for a connection... ");
 
                     //Accept a connection
-                    TcpClient _client = Server.AcceptTcpClient();
+                    Client = Server.AcceptTcpClient();
 
                     data = null;
 
                     // Get a stream object for reading and writing
-                    NetworkStream _stream = _client.GetStream();
+                    NetworkStream stream = Client.GetStream();
 
                     int i;
-                    i = _stream.Read(bytes, 0, bytes.Length);
+                    i = stream.Read(bytes, 0, bytes.Length);
 
                     data = System.Text.Encoding.UTF8.GetString(bytes, 0, i);
                     Debug.WriteLine($"Received: {data}");
@@ -67,7 +65,7 @@ namespace WpfApp2.Viewmodels
                     {
                         // Send back a response.                        
                         byte[] msg = System.Text.Encoding.UTF8.GetBytes("accept");
-                        _stream.Write(msg, 0, msg.Length);
+                        stream.Write(msg, 0, msg.Length);
                         Debug.WriteLine($"Sent: {data}");
                         Success = true;
                         break;
@@ -76,10 +74,10 @@ namespace WpfApp2.Viewmodels
                     {
                         // Send back a response.                        
                         byte[] msg = System.Text.Encoding.UTF8.GetBytes("deny");
-                        _stream.Write(msg, 0, msg.Length);
+                        stream.Write(msg, 0, msg.Length);
                         Debug.WriteLine($"Sent: {data}");
                         Success = false;
-                        _client.Close();
+                        Client.Close();
                     }
                 }
             }
@@ -99,14 +97,14 @@ namespace WpfApp2.Viewmodels
             try
             {
                 IPAddress serverIP = IPAddress.Parse(ipAddress);
-                TcpClient _client = new TcpClient();
-                _client.Connect(serverIP, port);
+                Client = new TcpClient();
+                Client.Connect(serverIP, port);
 
                 // Encode username to bytearray
                 byte[] data = Encoding.UTF8.GetBytes(username);
 
                 // Get a client stream for reading and writing.
-                NetworkStream _stream = _client.GetStream();
+                NetworkStream _stream = Client.GetStream();
 
                 //// Send the message to the connected TcpServer. 
                 _stream.Write(data, 0, data.Length);
@@ -125,12 +123,7 @@ namespace WpfApp2.Viewmodels
                 {
                     // go back to connection window if denied
                     MessageBox.Show("Connection denied by host", "Alert", MessageBoxButton.OK);
-                    _client.Close();
-                    Success = false;
-                }
-                else
-                {
-                    Success = true;
+                    Client.Close();
                 }
             }
             catch (ArgumentNullException e)
@@ -140,6 +133,7 @@ namespace WpfApp2.Viewmodels
             catch (SocketException e)
             {
                 Console.WriteLine("SocketException: {0}", e);
+                MessageBox.Show("No host listening on port-IP combination", "Alert", MessageBoxButton.OK);
                 //Tell the user that the connection was refused. Probably due to no host listening on the provided port and IP combination.
             }
         }
