@@ -15,16 +15,16 @@
         <Button Content="Exit" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75"  Style="{StaticResource Darkmodebtn}" Command="{Binding ExitWindowCommand}"
 				CommandParameter="{x:Reference Name=LoginWindow}"/>
         <Button Content="Connect" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Style="{StaticResource Darkmodebtn}"
-                Command="{Binding ConnectCommand}" Visibility="{Binding IsChecked,ElementName=ConnectBtn,Converter={StaticResource b2v}}" IsEnabled="{Binding Path=EnableConnect}"/>
+                Command="{Binding ConnectCommand}" Visibility="{Binding IsChecked,ElementName=ConnectBtn,Converter={StaticResource b2v}}"/>
         <Button Content="Listen" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Style="{StaticResource Darkmodebtn}"
-                Command="{Binding ListenCommand}" Visibility="{Binding IsChecked,ElementName=ListenBtn,Converter={StaticResource b2v}}" IsEnabled="{Binding Path=EnableListen}"/>
+                Command="{Binding ListenCommand}" Visibility="{Binding IsChecked,ElementName=ListenBtn,Converter={StaticResource b2v}}"/>
         <TextBox Name="PortBox" Height="23" Margin="10,30,0,0" TextWrapping="Wrap" Width="178" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Cursor="Pen"
-                 Style="{StaticResource Darkmodetxt}" AutomationProperties.HelpText="Port" Text="{Binding Path=Port}"/>
+                 Style="{StaticResource Darkmodetxt}" AutomationProperties.HelpText="Port" Text="{Binding Path=Port, Mode=TwoWay}"/>
         <TextBox Height="23" Margin="10,95,0,0" TextWrapping="Wrap" Width="178" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Cursor="Pen"
-                 Style="{StaticResource Darkmodetxt}" AutomationProperties.HelpText="Username" Text="{Binding Path=User}"/>
+                 Style="{StaticResource Darkmodetxt}" AutomationProperties.HelpText="Username" Text="{Binding Path=Username, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         <TextBox Height="23" Margin="10,160,0,0" TextWrapping="Wrap" Width="178" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Cursor="Pen"
                  Style="{StaticResource Darkmodetxt}" AutomationProperties.HelpText="Connect to IP" Visibility="{Binding IsChecked,ElementName=ConnectBtn,Converter={StaticResource b2v}}"
-                 Text="{Binding Path=IP}"/>
+                 Text="{Binding Path=IP, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Port:" VerticalAlignment="Top" Style="{StaticResource Darkmodetitle}" Width="120" TextAlignment="Left"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,75,0,0" Text="Username:" VerticalAlignment="Top" Style="{StaticResource Darkmodetitle}" Width="120" TextAlignment="Left"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,140,0,0" Text="IP address:" VerticalAlignment="Top" Style="{StaticResource Darkmodetitle}" Width="120" TextAlignment="Left" Visibility="{Binding IsChecked,ElementName=ConnectBtn,Converter={StaticResource b2v}}"/>
