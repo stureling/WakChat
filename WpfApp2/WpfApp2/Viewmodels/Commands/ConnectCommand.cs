@@ -24,6 +24,13 @@ namespace WpfApp2.Viewmodels.Commands
         }
 
         public bool CanExecute(object parameter)
+        /*
+        A lot of if-statements checking user input, split up to ease readability.
+        Is bound to text boxes on login page.
+        Username needs to be between 1 and 24 characters long.
+        Port needs to be an integer with a value between 1024 ad 65535.
+        IP needs to be in a valid format.
+        */
         {
             if (String.IsNullOrWhiteSpace(ViewModel.User.Username) || String.IsNullOrWhiteSpace(ViewModel.User.Port.ToString()))
             {
