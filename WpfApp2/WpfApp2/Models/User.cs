@@ -14,7 +14,7 @@ namespace WpfApp2.Models
     {
         private int _port;
         private string _username;
-        private string _ip;
+        private string _ip = "";
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -29,6 +29,7 @@ namespace WpfApp2.Models
             set
             {
                 _port = value;
+                Debug.WriteLine(_port);
                 OnPropertyChanged("Port");
             }
         }
@@ -42,6 +43,7 @@ namespace WpfApp2.Models
             set
             {
                 _username = value;
+                Debug.WriteLine(_username);
                 OnPropertyChanged("Username");
             }
         }

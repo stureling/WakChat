@@ -17,7 +17,7 @@ namespace WpfApp2.Viewmodels
 {
     public class LoginViewmodel : BaseViewmodel, INotifyPropertyChanged
     {
-        public User user;
+        private User _user;
         private bool _enableConnect;
         private bool _enableListen;
 
@@ -35,58 +35,7 @@ namespace WpfApp2.Viewmodels
             this.OpenWindowCommand = new OpenWindowCommand(this);
             this.ListenCommand = new ListenCommand(this);
             this.ConnectCommand = new ConnectCommand(this);
-            this.user = new User();
-        }
-
-        public bool EnableConnect
-        {
-            get
-            {
-                return _enableConnect;
-            }
-            set
-            {
-                if (String.IsNullOrWhiteSpace(user.Username) || String.IsNullOrWhiteSpace(user.IP) || String.IsNullOrWhiteSpace(user.Port.ToString()))
-                {
-                    _enableConnect = false;
-                }
-                else
-                {
-                    _enableConnect = true;
-                }
-            }
-        }
-
-        public bool EnableListen
-        {
-            get
-            {
-                return _enableListen;
-            }
-            set
-            {
-                if (String.IsNullOrWhiteSpace(user.Username) || String.IsNullOrWhiteSpace(user.Port.ToString()))
-                {
-                    _enableListen = false;
-                }
-                else
-                {
-                    _enableListen = true;
-                }
-            }
-        }
-
-        public int Port
-        {
-            get
-            {
-                return user.Port;
-            }
-            set
-            {
-                user.Port = value;
-                OnPropertyChanged("Port");
-            }
+            this._user = new User();
         }
 
         public void Connect()
@@ -112,7 +61,7 @@ namespace WpfApp2.Viewmodels
         public void ConnectThread()
         {
             Connection connection = new Connection();
-            connection.Connect(user.Port, user.IP, user.Username);
+            connection.Connect(User.Port, User.IP, User.Username);
             if (connection.Success)
             {
                 //continue to chat screen
@@ -127,7 +76,7 @@ namespace WpfApp2.Viewmodels
         public void ListenThread()
         {
             Connection connection = new Connection();
-            connection.Listen(user.Port);
+            connection.Listen(User.Port);
             if (connection.Success)
             {
                 //continue to chat screen
@@ -140,28 +89,15 @@ namespace WpfApp2.Viewmodels
             }
         }
 
-        public string Username
+        public User User
         {
             get
             {
-                return user.Username;
+                return _user;
             }
             set
             {
-                user.Username = value;
-                OnPropertyChanged("Username");
-            }
-        }
-        public string IP
-        {
-            get
-            {
-                return user.IP;
-            }
-            set
-            {
-                user.IP = value;
-                OnPropertyChanged("IP");
+                _user = value;
             }
         }
 
