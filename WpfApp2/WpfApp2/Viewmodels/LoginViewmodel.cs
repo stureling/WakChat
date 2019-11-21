@@ -105,7 +105,8 @@ namespace WpfApp2.Viewmodels
         {
             if(connectionThread != null)
             {
-                connectionThread.Abort();
+                Debug.WriteLine("Thread aborted to make room for new thread");
+                connectionThread.Suspend();
             }
             connectionThread = new Thread(new ThreadStart(ConnectThread));
             connectionThread.Start();
@@ -114,7 +115,8 @@ namespace WpfApp2.Viewmodels
         {
             if(connectionThread != null)
             {
-                connectionThread.Abort();
+                Debug.WriteLine("Thread aborted to make room for new thread");
+                connectionThread.Suspend();
             }
             connectionThread = new Thread(new ThreadStart(ListenThread));
             connectionThread.Start();
