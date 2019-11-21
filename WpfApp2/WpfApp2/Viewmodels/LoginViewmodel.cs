@@ -20,8 +20,8 @@ namespace WpfApp2.Viewmodels
         private User _user;
         private bool _enableConnect;
         private bool _enableListen;
-
         private Thread connectionThread;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ICommand ExitWindowCommand { get; set; }

@@ -13,13 +13,15 @@ namespace WpfApp2.Viewmodels
 {
     public class ChatViewmodel : BaseViewmodel
     {
+        private Connection connection;
         public ICommand ExitWindowCommand { get; set; }
         public ICommand OpenWindowCommand { get; set; }
 
-        public ChatViewmodel()
+        public ChatViewmodel(Connection connection)
         {
             this.ExitWindowCommand = new ExitWindowCommand(this);
             this.OpenWindowCommand = new OpenWindowCommand(this);
+            this.connection = connection;
         }
     }
 }
