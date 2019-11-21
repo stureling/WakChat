@@ -11,15 +11,15 @@ using WpfApp2.Views;
 
 namespace WpfApp2.Viewmodels
 {
-    public class ChatWindowViewmodel : BaseViewmodel
+    public class ChatViewmodel : BaseViewmodel
     {
         public ICommand ExitWindowCommand { get; set; }
-        public ICommand EnterWindowCommand { get; set; }
+        public ICommand OpenWindowCommand { get; set; }
 
-        public ChatWindowViewmodel()
+        public ChatViewmodel()
         {
             this.ExitWindowCommand = new ExitWindowCommand(this);
-            this.EnterWindowCommand = new EnterWindowCommand(this);
+            this.OpenWindowCommand = new OpenWindowCommand(this);
         }
     }
 }

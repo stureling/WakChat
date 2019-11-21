@@ -4,12 +4,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WpfApp2.Viewmodels.Commands;
-using WpfApp2.Views;
 
 namespace WpfApp2.Viewmodels
 {
@@ -19,6 +19,7 @@ namespace WpfApp2.Viewmodels
         private int _port;
         private string _username;
         private string _ip;
+        private Thread connectionThread;
         public int Port
         {
             get 
@@ -90,19 +91,35 @@ namespace WpfApp2.Viewmodels
         }
 
         public ICommand ExitWindowCommand { get; set; }
-        public ICommand EnterWindowCommand { get; set; }
         public ICommand ConnectCommand { get; set; }
         public ICommand ListenCommand { get; set; }
 
         public LoginViewmodel()
         {
             this.ExitWindowCommand = new ExitWindowCommand(this);
-            this.EnterWindowCommand = new EnterWindowCommand(this);
             this.ListenCommand = new ListenCommand(this);
             this.ConnectCommand = new ConnectCommand(this);
         }
 
         public void Connect()
+        {
+            if(connectionThread != null)
+            {
+                connectionThread.Abort();
+            }
+            connectionThread = new Thread(new ThreadStart(ConnectThread));
+            connectionThread.Start();
+        }
+        public void Listen()
+        {
+            if(connectionThread != null)
+            {
+                connectionThread.Abort();
+            }
+            connectionThread = new Thread(new ThreadStart(ListenThread));
+            connectionThread.Start();
+        }
+        public void ConnectThread()
         {
             Connection connection = new Connection();
             connection.Connect(_port, _ip, _username);
@@ -117,7 +134,7 @@ namespace WpfApp2.Viewmodels
                 MessageBox.Show("Staying on this screen", "Alert", MessageBoxButton.OK);
             }
         }
-        public void Listen()
+        public void ListenThread()
         {
             Connection connection = new Connection();
             connection.Listen(_port);

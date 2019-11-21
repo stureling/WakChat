@@ -6,13 +6,13 @@ namespace WpfApp2.Views
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class ChatWindow : Window
+    public partial class ChatView : Window
     {
-        public ChatWindow()
+        public ChatView()
         {
             InitializeComponent();
 
-            DataContext = new LoginViewmodel();
+            DataContext = new ChatViewmodel();
         }
     }
 }

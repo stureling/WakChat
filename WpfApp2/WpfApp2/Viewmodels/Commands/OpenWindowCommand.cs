@@ -8,11 +8,11 @@ using System.Windows.Input;
 
 namespace WpfApp2.Viewmodels.Commands
 {
-    public class EnterWindowCommand : ICommand
+    public class OpenWindowCommand : ICommand
     {
         public BaseViewmodel ViewModel { get; set; }
 
-        public EnterWindowCommand(BaseViewmodel viewModel)
+        public OpenWindowCommand(BaseViewmodel viewModel)
         {
             this.ViewModel = viewModel;
         }
@@ -21,13 +21,12 @@ namespace WpfApp2.Viewmodels.Commands
 
         public bool CanExecute(object parameter)
         {
-            return false;
+            return true;
         }
 
         public void Execute(object parameter)
         {
-            Window window = (Window)parameter;
-            this.ViewModel.EnterClick(window);
+            this.ViewModel.EnterClick();
         }
     }
 }

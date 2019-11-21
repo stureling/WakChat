@@ -97,7 +97,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Views\ConnectionWindow.xaml">
+    <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -105,11 +105,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Login.xaml">
+    <Page Include="Views\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ChatWindow.xaml">
+    <Page Include="Views\ChatView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -121,18 +121,19 @@
     <Compile Include="Viewmodels\Commands\ListenCommand.cs" />
     <Compile Include="Viewmodels\Connection.cs" />
     <Compile Include="Viewmodels\BaseViewmodel.cs" />
-    <Compile Include="Viewmodels\ChatWindowViewmodel.cs" />
-    <Compile Include="Viewmodels\Commands\EnterWindowCommand.cs" />
+    <Compile Include="Viewmodels\ChatViewmodel.cs" />
+    <Compile Include="Viewmodels\Commands\OpenWindowCommand.cs" />
     <Compile Include="Viewmodels\Commands\ExitWindowCommand.cs" />
     <Compile Include="Viewmodels\LoginViewmodel.cs" />
-    <Compile Include="Views\ConnectionWindow.xaml.cs">
-      <DependentUpon>ConnectionWindow.xaml</DependentUpon>
+    <Compile Include="Viewmodels\MainViewmodel.cs" />
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Login.xaml.cs">
-      <DependentUpon>Login.xaml</DependentUpon>
+    <Compile Include="Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ChatWindow.xaml.cs">
-      <DependentUpon>ChatWindow.xaml</DependentUpon>
+    <Compile Include="Views\ChatView.xaml.cs">
+      <DependentUpon>ChatView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
