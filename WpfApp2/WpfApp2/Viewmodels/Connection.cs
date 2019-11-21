@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace WpfApp2.Viewmodels
 {
-    class Connection
+    public class Connection
     {
         public Connection()
         {

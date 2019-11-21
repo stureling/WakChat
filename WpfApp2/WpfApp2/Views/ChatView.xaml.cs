@@ -8,11 +8,11 @@ namespace WpfApp2.Views
     /// </summary>
     public partial class ChatView : Window
     {
-        public ChatView()
+        public ChatView(Connection connection)
         {
             InitializeComponent();
 
-            DataContext = new ChatViewmodel();
+            DataContext = new ChatViewmodel(connection);
         }
     }
 }
