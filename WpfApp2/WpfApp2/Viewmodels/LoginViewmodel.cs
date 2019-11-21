@@ -94,6 +94,7 @@ namespace WpfApp2.Viewmodels
             if(connectionThread != null)
             {
                 Debug.WriteLine("Thread aborted to make room for new thread");
+                //Freezes UI because abort is waiting for TcpClient _client = Server.AcceptTcpClient(); to finish in Connection.cs
                 connectionThread.Abort();
             }
             connectionThread = new Thread(new ThreadStart(ConnectThread));
@@ -111,32 +112,46 @@ namespace WpfApp2.Viewmodels
         }
         public void ConnectThread()
         {
-            Connection connection = new Connection();
-            connection.Connect(user.Port, user.IP, user.Username);
-            if (connection.Success)
+            try
             {
-                //continue to chat screen
-                MessageBox.Show("Continue to chat window", "Alert", MessageBoxButton.OK);
+                Connection connection = new Connection();
+                connection.Connect(user.Port, user.IP, user.Username);
+                if (connection.Success)
+                {
+                    //continue to chat screen
+                    MessageBox.Show("Continue to chat window", "Alert", MessageBoxButton.OK);
+                }
+                else
+                {
+                    //stay on this screen
+                    MessageBox.Show("Staying on this screen", "Alert", MessageBoxButton.OK);
+                }
             }
-            else
+            catch(ThreadAbortException e)
             {
-                //stay on this screen
-                MessageBox.Show("Staying on this screen", "Alert", MessageBoxButton.OK);
+                Debug.WriteLine(e);
             }
         }
         public void ListenThread()
         {
-            Connection connection = new Connection();
-            connection.Listen(user.Port);
-            if (connection.Success)
+            try
             {
-                //continue to chat screen
-                MessageBox.Show("Continue to chat window", "Alert", MessageBoxButton.OK);
+                Connection connection = new Connection();
+                connection.Listen(user.Port);
+                if (connection.Success)
+                {
+                    //continue to chat screen
+                    MessageBox.Show("Continue to chat window", "Alert", MessageBoxButton.OK);
+                }
+                else
+                {
+                    //stay on this screen
+                    MessageBox.Show("Staying on this screen", "Alert", MessageBoxButton.OK);
+                }
             }
-            else
+            catch(ThreadAbortException e)
             {
-                //stay on this screen
-                MessageBox.Show("Staying on this screen", "Alert", MessageBoxButton.OK);
+                Debug.WriteLine(e);
             }
         }
 
