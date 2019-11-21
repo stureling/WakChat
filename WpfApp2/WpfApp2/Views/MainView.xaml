@@ -9,7 +9,8 @@
         d:DataContext="{d:DesignInstance Type=vm:MainViewmodel, IsDesignTimeCreatable=True}" 
         Title="PLACEHOLDER" Height="450" Width="800" Style="{StaticResource Darkmodebg}">
     <Grid>
-        <Button Content="New connection" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="Auto" Command="{Binding OpenWindowCommand}"/>
+        <Button Content="New connection" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Command="{Binding OpenWindowCommand}" Style="{StaticResource Darkmodebtn}"/>
+        <TextBlock HorizontalAlignment="Center" Style="{StaticResource Darkmodetitle}" Margin="0,-100,0,0" TextWrapping="Wrap" Text="Welcome to PLACEHOLDER" VerticalAlignment="Center"/>
 
     </Grid>
 </Window>
