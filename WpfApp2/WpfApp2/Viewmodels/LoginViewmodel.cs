@@ -65,7 +65,7 @@ namespace WpfApp2.Viewmodels
             {
                 Connection connection = new Connection();
                 connection.Connect(User.Port, User.IP, User.Username);
-                if (connection.Success)
+                if (connection.Client.Connected)
                 {
                     //continue to chat screen
                     MessageBox.Show("Continue to chat window", "Alert", MessageBoxButton.OK);
@@ -87,7 +87,7 @@ namespace WpfApp2.Viewmodels
             {
                 Connection connection = new Connection();
                 connection.Listen(User.Port);
-                if (connection.Success)
+                if (connection.Client.Connected)
                 {
                     //continue to chat screen
                     MessageBox.Show("Continue to chat window", "Alert", MessageBoxButton.OK);
