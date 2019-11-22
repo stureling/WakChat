@@ -1,12 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
+using WpfApp2.Models;
 
 namespace WpfApp2.Viewmodels
 {
@@ -100,7 +104,11 @@ namespace WpfApp2.Viewmodels
                 Client = new TcpClient();
                 Client.Connect(serverIP, port);
 
-                // Encode username to bytearray
+                ConnectionJSON json = new ConnectionJSON(username, "EstablishConnection", "request");
+
+                string jsonString = System.Text.Json.JsonSerializer.Serialize(json);
+
+                // Encode the string to bytearray
                 byte[] data = Encoding.UTF8.GetBytes(username);
 
                 // Get a client stream for reading and writing.

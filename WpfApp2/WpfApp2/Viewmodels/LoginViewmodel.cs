@@ -17,9 +17,6 @@ namespace WpfApp2.Viewmodels
 {
     public class LoginViewmodel : BaseViewmodel, INotifyPropertyChanged
     {
-        private User _user;
-        private bool _enableConnect;
-        private bool _enableListen;
         private Thread connectionThread;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -35,7 +32,7 @@ namespace WpfApp2.Viewmodels
             this.OpenWindowCommand = new OpenWindowCommand(this);
             this.ListenCommand = new ListenCommand(this);
             this.ConnectCommand = new ConnectCommand(this);
-            this._user = new User();
+            this.User = new User();
         }
 
         public void Connect()
@@ -104,17 +101,7 @@ namespace WpfApp2.Viewmodels
             }
         }
 
-        public User User
-        {
-            get
-            {
-                return _user;
-            }
-            set
-            {
-                _user = value;
-            }
-        }
+        public User User { get; set; }
 
         public void OnPropertyChanged(string propertyName)
         {
