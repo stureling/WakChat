@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -59,7 +58,7 @@ namespace WpfApp2.Viewmodels
                     int i;
                     i = stream.Read(bytes, 0, bytes.Length);
 
-                    data = System.Text.Encoding.UTF8.GetString(bytes, 0, i);
+                    data = Encoding.UTF8.GetString(bytes, 0, i);
                     Debug.WriteLine($"Received: {data}");
 
                     // Creates message box to inform user of connected 
@@ -106,7 +105,7 @@ namespace WpfApp2.Viewmodels
 
                 ConnectionJSON json = new ConnectionJSON(username, "EstablishConnection", "request");
 
-                string jsonString = System.Text.Json.JsonSerializer.Serialize(json);
+                string jsonString = JsonSerializer.Serialize(json);
 
                 // Encode the string to bytearray
                 byte[] data = Encoding.UTF8.GetBytes(username);
@@ -125,7 +124,7 @@ namespace WpfApp2.Viewmodels
 
                 //// Read the first batch of the TcpServer response bytes.
                 Int32 bytes = _stream.Read(data, 0, data.Length);
-                responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+                responseData = Encoding.UTF8.GetString(data, 0, bytes);
                 Console.WriteLine($"Received: {responseData}");
                 if (responseData == "deny")
                 {

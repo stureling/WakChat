@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using WpfApp2.Models;
 using WpfApp2.Viewmodels.Commands;
 using WpfApp2.Views;
 
@@ -23,5 +24,8 @@ namespace WpfApp2.Viewmodels
             this.OpenWindowCommand = new OpenWindowCommand(this);
             this.connection = connection;
         }
+
+
+        public Message Msg { get; set; }
     }
 }

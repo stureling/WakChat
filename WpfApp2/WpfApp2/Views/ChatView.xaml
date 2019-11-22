@@ -10,11 +10,19 @@
         Title="Slackchat" Height="450" Width="800"
         Style="{StaticResource Darkmodebg}" Visibility="Visible" WindowStyle="None">
     <Grid>
-        <Grid HorizontalAlignment="Left" Height="238" Margin="29,55,0,0" VerticalAlignment="Top" Width="732">
-            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Gurra: Tjännna hur e läget. Ska vi dra å kolla på fotboll på torsdag och ta en bira? MVH" VerticalAlignment="Top" Height="47" Width="712" Style="{StaticResource Darkmodemessage}"/>
-        </Grid>
         <Button Content="Send" HorizontalAlignment="Left" Height="75" Margin="714,334,0,0" VerticalAlignment="Top" Width="68" Style="{StaticResource Darkmodebtn}"/>
         <TextBox HorizontalAlignment="Left" Height="75" Margin="10,334,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="699" Style="{StaticResource Darkmodetxt}"/>
         <Button Content="Exit" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="75" Style="{StaticResource Darkmodebtn}" Command="{Binding ExitWindowCommand}"/>
+        <StackPanel HorizontalAlignment="Left" Height="308" Margin="10,21,0,0" VerticalAlignment="Top" Width="692">
+            <ScrollViewer Height="308">
+                <ItemsControl ItemsSource="{Binding Messages}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Msg}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </StackPanel>
     </Grid>
 </Window>
