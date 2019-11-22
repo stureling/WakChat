@@ -10,7 +10,7 @@
         Title="PLACEHOLDER" Height="450" Width="800" Style="{StaticResource Darkmodebg}">
     <Grid>
         <Button Content="New connection" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Command="{Binding OpenWindowCommand}" Style="{StaticResource Darkmodebtn}"/>
-        <TextBlock HorizontalAlignment="Center" Style="{StaticResource Darkmodetitle}" Margin="0,-100,0,0" TextWrapping="Wrap" Text="Welcome to PLACEHOLDER" VerticalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Center" Style="{StaticResource Darkmodetitle}" Margin="0,-100,0,0" Text="Welcome to PLACEHOLDER" VerticalAlignment="Center"/>
 
     </Grid>
 </Window>
