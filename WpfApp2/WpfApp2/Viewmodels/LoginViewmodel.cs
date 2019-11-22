@@ -15,6 +15,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using WpfApp2.Models;
 using WpfApp2.Viewmodels.Commands;
+using WpfApp2.Views;
 
 namespace WpfApp2.Viewmodels
 {
@@ -105,6 +106,7 @@ namespace WpfApp2.Viewmodels
                 else if (responseJson.ConnectionTypeValue == "Accept")
                 {
                     // continue to next window
+                    StartChat();
                     MessageBox.Show("Connection accepted by host, continue to chat window", "Alert", MessageBoxButton.OK);
                 }
                 else
@@ -192,6 +194,7 @@ namespace WpfApp2.Viewmodels
                     }
                }
                 //Connection has been made
+                StartChat();
                 MessageBox.Show("Connection made, continue to chat window", "Alert", MessageBoxButton.OK);
             }
             catch (SocketException e)
@@ -206,6 +209,12 @@ namespace WpfApp2.Viewmodels
             {
                 Connection.Server.Stop();
             }
+        }
+
+        public void StartChat()
+        {
+            ChatView newChat = new ChatView(Connection);
+            newChat.Show();
         }
 
 
