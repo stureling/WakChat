@@ -164,7 +164,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Viewmodels\Commands\ConnectCommand.cs" />
     <Compile Include="Viewmodels\Commands\ListenCommand.cs" />
-    <Compile Include="Viewmodels\Connection.cs" />
+    <Compile Include="Models\Connection.cs" />
     <Compile Include="Viewmodels\BaseViewmodel.cs" />
     <Compile Include="Viewmodels\ChatViewmodel.cs" />
     <Compile Include="Viewmodels\Commands\OpenWindowCommand.cs" />

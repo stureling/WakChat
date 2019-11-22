@@ -12,11 +12,13 @@ namespace WpfApp2.Models
         public string ConnectionType { get; set; }
         public string ConnectionTypeValue { get; set; }
         public DateTime Time { get; set; }
+        public ConnectionJSON() { }
         public ConnectionJSON(string username, string connectionType, string connectionTypeValue)
         {
             Username = username;
             ConnectionType = connectionType;
             ConnectionTypeValue = connectionTypeValue;
+            Time = DateTime.Now;
         }
     }
 }
