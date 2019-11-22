@@ -106,7 +106,7 @@ namespace WpfApp2.Viewmodels
                 else if (responseJson.ConnectionTypeValue == "Accept")
                 {
                     // continue to next window
-                    StartChat();
+                    //StartChat();
                     MessageBox.Show("Connection accepted by host, continue to chat window", "Alert", MessageBoxButton.OK);
                 }
                 else
@@ -194,7 +194,7 @@ namespace WpfApp2.Viewmodels
                     }
                }
                 //Connection has been made
-                StartChat();
+                //StartChat();
                 MessageBox.Show("Connection made, continue to chat window", "Alert", MessageBoxButton.OK);
             }
             catch (SocketException e)
