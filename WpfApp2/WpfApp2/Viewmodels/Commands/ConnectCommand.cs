@@ -42,7 +42,7 @@ namespace WpfApp2.Viewmodels.Commands
                 Debug.WriteLine("Invalid Port");
                 return false;
             }
-            else if (ViewModel.User.Username.Length == 0 || ViewModel.User.Username.Length > 24)
+            else if (ViewModel.User.Username.Length == 0 || ViewModel.User.Username.Length > 24 || !Regex.Match(ViewModel.User.Username, @"^[\p{L}\p{N}]+$").Success)
             {
                 Debug.WriteLine("Invalid Username");
                 return false;
