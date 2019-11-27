@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace WpfApp2.Models
 {
-    class ConnectionJSON
+    class MessageJSON
     {
         public string Username { get; set; }
         public string ConnectionType { get; set; }
         public string ConnectionTypeValue { get; set; }
         public DateTime Time { get; set; }
-        public ConnectionJSON() { }
-        public ConnectionJSON(string username, string connectionType, string connectionTypeValue)
+        public MessageJSON() { }
+        public MessageJSON(string username, string connectionType, string connectionTypeValue)
         {
             Username = username;
             ConnectionType = connectionType;

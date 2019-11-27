@@ -55,7 +55,7 @@ namespace WpfApp2.Viewmodels
                 IPAddress serverIP = IPAddress.Parse(user.IP);
                 Client.Connect(serverIP, user.Port);
 
-                ConnectionJSON json = new ConnectionJSON(user.Username, "EstablishConnection", "request");
+                MessageJSON json = new MessageJSON(user.Username, "EstablishConnection", "request");
                 string jsonString = JsonSerializer.Serialize(json);
 
                 // Encode the string to bytearray
@@ -76,7 +76,7 @@ namespace WpfApp2.Viewmodels
                 //// Read the first batch of the TcpServer response bytes.
                 Int32 bytes = stream.Read(data, 0, data.Length);
                 responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
-                ConnectionJSON responseJson = JsonSerializer.Deserialize<ConnectionJSON>(responseData);
+                MessageJSON responseJson = JsonSerializer.Deserialize<MessageJSON>(responseData);
                 Console.WriteLine($"Received: {responseData}");
 
                 if (responseJson.ConnectionTypeValue == "Deny")
@@ -150,7 +150,7 @@ namespace WpfApp2.Viewmodels
                         
                         data = Encoding.UTF8.GetString(bytes, 0, i);
                         Debug.WriteLine($"Received: {data}");
-                        ConnectionJSON jsonData = JsonSerializer.Deserialize<ConnectionJSON>(data);
+                        MessageJSON jsonData = JsonSerializer.Deserialize<MessageJSON>(data);
 
                         // Creates message box to inform user of connected 
                         MessageBoxResult result = MessageBox.Show($"User {jsonData.Username} wishes to connect, Accept?", "Alert", MessageBoxButton.YesNo);
@@ -158,7 +158,7 @@ namespace WpfApp2.Viewmodels
                         if (result == MessageBoxResult.Yes)
                         {
                             // Send back a response.                        
-                            ConnectionJSON json = new ConnectionJSON(user.Username, "EstablishConnection", "Accept");
+                            MessageJSON json = new MessageJSON(user.Username, "EstablishConnection", "Accept");
                             string response = JsonSerializer.Serialize(json);
                             byte[] msg = Encoding.UTF8.GetBytes(response);
                             stream.Write(msg, 0, msg.Length);
@@ -169,7 +169,7 @@ namespace WpfApp2.Viewmodels
                         else if (result == MessageBoxResult.No)
                         {
                             // Send back a response.                        
-                            ConnectionJSON json = new ConnectionJSON(user.Username, "EstablishConnection", "Deny");
+                            MessageJSON json = new MessageJSON(user.Username, "EstablishConnection", "Deny");
                             string response = JsonSerializer.Serialize(json);
                             byte[] msg = Encoding.UTF8.GetBytes(response);
                             stream.Write(msg, 0, msg.Length);
@@ -195,5 +195,32 @@ namespace WpfApp2.Viewmodels
                 Server.Stop();
             }
         }   
+        public void Send(User user, string message)
+        {
+            MessageJSON json = new MessageJSON(user.Username, "Message", message);
+            string jsonString = JsonSerializer.Serialize(json);
+
+            NetworkStream stream = Client.GetStream();
+
+            byte[] msg = Encoding.UTF8.GetBytes(jsonString);
+            stream.Write(msg, 0, msg.Length);
+
+        }
+        public void ReciveLoop()
+        {
+
+            Byte[] bytes = new Byte[256];
+            NetworkStream stream = Client.GetStream();
+            int i;
+            string data;
+
+            while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+            {
+                data = Encoding.UTF8.GetString(bytes, 0, i);
+                Console.WriteLine($"Received: {data}");
+
+                byte[] msg = Encoding.UTF8.GetBytes(data);
+            }
+        }
     }    
 }
