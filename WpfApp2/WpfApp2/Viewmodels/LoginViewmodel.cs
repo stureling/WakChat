@@ -35,10 +35,10 @@ namespace WpfApp2.Viewmodels
         {
             this.ExitWindowCommand = new ExitWindowCommand(this);
             this.OpenWindowCommand = new OpenWindowCommand(this);
-            this.ListenCommand = new ListenCommand(this);
             this.ConnectCommand = new ConnectCommand(this);
-            this.User = new User();
+            this.ListenCommand = new ListenCommand(this);
             this.Connection = new Connection();
+            this.User = new User();
         }
 
         public void Connect()

@@ -169,7 +169,7 @@
     <Compile Include="Viewmodels\ChatViewmodel.cs" />
     <Compile Include="Viewmodels\Commands\OpenWindowCommand.cs" />
     <Compile Include="Viewmodels\Commands\ExitWindowCommand.cs" />
-    <Compile Include="Models\ConnectionJSON.cs" />
+    <Compile Include="Models\MessageJSON.cs" />
     <Compile Include="Viewmodels\Commands\SendCommand.cs" />
     <Compile Include="Viewmodels\LoginViewmodel.cs" />
     <Compile Include="Viewmodels\MainViewmodel.cs" />
