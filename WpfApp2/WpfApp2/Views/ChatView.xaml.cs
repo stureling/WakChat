@@ -11,7 +11,6 @@ namespace WpfApp2.Views
         public ChatView(Connection connection)
         {
             InitializeComponent();
-
             DataContext = new ChatViewmodel(connection);
         }
     }
