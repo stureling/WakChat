@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using WpfApp2.Models;
 using WpfApp2.Viewmodels;
 
 namespace WpfApp2.Views
@@ -8,10 +9,10 @@ namespace WpfApp2.Views
     /// </summary>
     public partial class ChatView : Window
     {
-        public ChatView(Connection connection)
+        public ChatView(Connection connection, User user)
         {
             InitializeComponent();
-            DataContext = new ChatViewmodel(connection);
+            DataContext = new ChatViewmodel(connection, user);
         }
     }
 }
