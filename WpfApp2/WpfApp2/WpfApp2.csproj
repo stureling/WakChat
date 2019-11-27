@@ -161,7 +161,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\Message.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Viewmodels\Commands\ConnectCommand.cs" />
     <Compile Include="Viewmodels\Commands\ListenCommand.cs" />
@@ -171,6 +170,7 @@
     <Compile Include="Viewmodels\Commands\OpenWindowCommand.cs" />
     <Compile Include="Viewmodels\Commands\ExitWindowCommand.cs" />
     <Compile Include="Models\ConnectionJSON.cs" />
+    <Compile Include="Viewmodels\Commands\SendCommand.cs" />
     <Compile Include="Viewmodels\LoginViewmodel.cs" />
     <Compile Include="Viewmodels\MainViewmodel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
