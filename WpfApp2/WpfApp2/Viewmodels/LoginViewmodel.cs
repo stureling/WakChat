@@ -53,7 +53,7 @@ namespace WpfApp2.Viewmodels
 
         public void StartChat()
         {
-            ChatView newChat = new ChatView(Connection);
+            ChatView newChat = new ChatView(Connection, User);
             newChat.Show();
         }
 
