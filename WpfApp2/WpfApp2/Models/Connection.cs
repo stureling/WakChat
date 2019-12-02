@@ -24,7 +24,7 @@ namespace WpfApp2.Viewmodels
         public TcpClient Client { get; set; }
 
         public TcpListener Server { get; set; }
-        public void Connect(User user)
+        public void Connect(User user, LoginViewmodel viewmodel)
         {
             if(connectionThread != null)
             {
@@ -32,11 +32,11 @@ namespace WpfApp2.Viewmodels
                 connectionThread.Abort();
                 Debug.WriteLine("Thread aborted");
             }
-            connectionThread = new Thread(() => ConnectThread(user));
+            connectionThread = new Thread(() => ConnectThread(user, viewmodel));
             connectionThread.Start();
         }
         
-        public void Listen(User user)
+        public void Listen(User user, LoginViewmodel viewmodel)
         {
             if(connectionThread != null)
             {
@@ -44,11 +44,11 @@ namespace WpfApp2.Viewmodels
                 connectionThread.Abort();
                 Debug.WriteLine("Thread aborted");
             }
-            connectionThread = new Thread(() => ListenThread(user));
+            connectionThread = new Thread(() => ListenThread(user, viewmodel));
             connectionThread.Start();
         }
         
-        private void ConnectThread(User user)
+        private void ConnectThread(User user, LoginViewmodel viewmodel)
         {
             try
             {
@@ -90,6 +90,12 @@ namespace WpfApp2.Viewmodels
                     // continue to next window
                     //StartChat();
                     MessageBox.Show("Connection accepted by host, continue to chat window", "Alert", MessageBoxButton.OK);
+
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        // kör kod här
+                        viewmodel.StartChat();
+                    });
                 }
                 
                 else
@@ -113,7 +119,7 @@ namespace WpfApp2.Viewmodels
             }
         }
 
-        private void ListenThread(User user)
+        private void ListenThread(User user, LoginViewmodel viewmodel)
         {
             try
             {
@@ -180,7 +186,7 @@ namespace WpfApp2.Viewmodels
                         }
                     }
                 }
-                MessageBox.Show("Connection made, continue to chat window", "Alert", MessageBoxButton.OK);
+                Application.Current.Dispatcher.Invoke(() => { viewmodel.StartChat(); });
             }
             catch (SocketException e)
             {
@@ -213,13 +219,10 @@ namespace WpfApp2.Viewmodels
             NetworkStream stream = Client.GetStream();
             int i;
             string data;
-
             while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
             {
                 data = Encoding.UTF8.GetString(bytes, 0, i);
                 Console.WriteLine($"Received: {data}");
-
-                byte[] msg = Encoding.UTF8.GetBytes(data);
             }
         }
     }    

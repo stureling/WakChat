@@ -43,18 +43,19 @@ namespace WpfApp2.Viewmodels
 
         public void Connect()
         {
-            Connection.Connect(User);
+            Connection.Connect(User, this);
         }
 
         public void Listen()
         {
-            Connection.Listen(User);
+            Connection.Listen(User, this);
         }
 
         public void StartChat()
         {
             ChatView newChat = new ChatView(Connection, User);
             newChat.Show();
+            //Window.GetWindow();
         }
 
 
