@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using System.Windows.Input;
 
 namespace WpfApp2.Viewmodels.Commands
 {
-    class SendCommand : ICommand
+    public class SendCommand : ICommand
     {
         public event EventHandler CanExecuteChanged
         {
@@ -19,18 +20,21 @@ namespace WpfApp2.Viewmodels.Commands
 
         public SendCommand(ChatViewmodel viewModel)
         {
+            Debug.WriteLine("CONSTRUCTOR");
             this.ViewModel = viewModel;
         }
 
         public bool CanExecute(object parameter)
 
         {
-            return true;
+            Debug.WriteLine("CANEXECUTE");
+            return !String.IsNullOrWhiteSpace(ViewModel.ThisMsg);
         }
 
         public void Execute(object parameter)
         {
-            ViewModel.SendMessage();
+            Debug.WriteLine("EXECUTE");
+            this.ViewModel.SendMessage();
         }
     }
 }

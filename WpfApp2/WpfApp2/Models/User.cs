@@ -12,54 +12,15 @@ namespace WpfApp2.Models
 {
     public class User: INotifyPropertyChanged
     {
-        private int _port;
-        private string _username;
-        private string _ip = "";
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public User() { }
 
-        public int Port
-        {
-            get
-            {
-                return _port;
-            }
-            set
-            {
-                _port = value;
-                Debug.WriteLine(_port);
-                OnPropertyChanged("Port");
-            }
-        }
+        public int Port { get; set; }
 
-        public string Username
-        {
-            get
-            {
-                return _username;
-            }
-            set
-            {
-                _username = value;
-                Debug.WriteLine(_username);
-                OnPropertyChanged("Username");
-            }
-        }
+        public string Username { get; set; }
 
-        public string IP
-        {
-            get
-            {
-                return _ip;
-            }
-            set
-            {
-                 _ip = value;
-                 OnPropertyChanged("IP");
-            }
-        }
+        public string IP { get; set; }
 
         public void OnPropertyChanged(string propertyName)
         {

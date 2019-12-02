@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WpfApp2.Models;
 using WpfApp2.Views;
 
 namespace WpfApp2.Viewmodels
@@ -24,7 +25,11 @@ namespace WpfApp2.Viewmodels
         }
         public void EnterClick()
         {
-            LoginView newWindow = new LoginView();
+            User user = new User();
+            user.IP = "127.0.0.1";
+            user.Username = "EEEEEEEEEEEEEEEEEEEEEEEE";
+            user.Port = 4444;
+            ChatView newWindow = new ChatView(new Connection(), user);
             newWindow.Show();
         }
     }

@@ -161,6 +161,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Viewmodels\Commands\ConnectCommand.cs" />
     <Compile Include="Viewmodels\Commands\ListenCommand.cs" />

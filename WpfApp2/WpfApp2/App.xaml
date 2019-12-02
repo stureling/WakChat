@@ -47,8 +47,25 @@
             <Setter Property="Background" Value="#474052"/>
             <Setter Property="Foreground" Value="Cornsilk"/>
             <Setter Property="FontFamily" Value="SimSun-ExtB"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        <Style x:Key="Darkmodeusername" TargetType="TextBlock">
+            <Setter Property="Background" Value="#474052"/>
+            <Setter Property="Foreground" Value="Cornsilk"/>
+            <Setter Property="FontFamily" Value="SimSun-ExtB"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+        </Style>
+        <Style x:Key="Darkmodetime" TargetType="TextBlock">
+            <Setter Property="Background" Value="#474052"/>
+            <Setter Property="Foreground" Value="#ffdce3"/>
+            <Setter Property="FontFamily" Value="SimSun-ExtB"/>
             <Setter Property="FontStyle" Value="Oblique"/>
             <Setter Property="FontSize" Value="15"/>
+            <Setter Property="TextAlignment" Value="Left"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
         <Style x:Key="Darkmoderadio" TargetType="RadioButton">
@@ -57,6 +74,9 @@
             <Setter Property="FontFamily" Value="SimSun-ExtB"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style x:Key="Darkmodechatbox" TargetType="StackPanel">
+            <Setter Property="Background" Value="#474052"/>
         </Style>
     </Application.Resources>
 </Application>
