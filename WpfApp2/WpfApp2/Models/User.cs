@@ -14,7 +14,13 @@ namespace WpfApp2.Models
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public User() { }
+        public User()
+        {
+            this.Port = 0;
+            this.IP = "";
+            this.Username = "";
+
+        }
 
         public int Port { get; set; }
 

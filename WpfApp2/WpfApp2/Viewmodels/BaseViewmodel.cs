@@ -23,11 +23,7 @@ namespace WpfApp2.Viewmodels
         }
         public void EnterClick()
         {
-            User user = new User();
-            user.IP = "127.0.0.1";
-            user.Username = "EEEEEEEEEEEEEEEEEEEEEEEE";
-            user.Port = 4444;
-            ChatView newWindow = new ChatView(new Connection(), user);
+            LoginView newWindow = new LoginView();
             newWindow.Show();
         }
     }
