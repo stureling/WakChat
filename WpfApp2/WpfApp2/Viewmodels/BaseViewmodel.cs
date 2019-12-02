@@ -11,8 +11,6 @@ namespace WpfApp2.Viewmodels
 {
     public class BaseViewmodel
     {
-        public Window window;
-
         public BaseViewmodel()
         {
         }
