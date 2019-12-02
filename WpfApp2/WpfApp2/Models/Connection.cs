@@ -89,13 +89,8 @@ namespace WpfApp2.Viewmodels
                 {
                     // continue to next window
                     //StartChat();
-                    MessageBox.Show("Connection accepted by host, continue to chat window", "Alert", MessageBoxButton.OK);
 
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        // kör kod här
-                        viewmodel.StartChat();
-                    });
+                    Application.Current.Dispatcher.Invoke(() => { viewmodel.StartChat(); });
                 }
                 
                 else
@@ -205,6 +200,7 @@ namespace WpfApp2.Viewmodels
         {
             MessageJSON json = new MessageJSON(user.Username, "Message", message);
             string jsonString = JsonSerializer.Serialize(json);
+            Debug.WriteLine("sending message ");
 
             NetworkStream stream = Client.GetStream();
 
@@ -212,18 +208,39 @@ namespace WpfApp2.Viewmodels
             stream.Write(msg, 0, msg.Length);
 
         }
+        public void startRecive()
+        {
+            connectionThread = new Thread(() => ReciveLoop());
+            connectionThread.Start();
+        }
         public void ReciveLoop()
         {
-
-            Byte[] bytes = new Byte[256];
             NetworkStream stream = Client.GetStream();
+
+            Debug.WriteLine("started looping");
+            // RECIEVE DATA
+            Byte[] bytes = new Byte[256];
             int i;
             string data;
-            while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+
+            while (true)
             {
-                data = Encoding.UTF8.GetString(bytes, 0, i);
-                Console.WriteLine($"Received: {data}");
+                if (stream.DataAvailable)
+                {
+                    i = stream.Read(bytes, 0, bytes.Length);
+                    data = Encoding.UTF8.GetString(bytes, 0, i);
+                    Debug.WriteLine($" Recived message : {data}");
+                }
             }
+            Debug.WriteLine("stopped looping");
+
+            //WHILE CONNECTION NOT TERMINATED-LOOP
+            //while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+            //{
+            //    data = Encoding.UTF8.GetString(bytes, 0, i);
+            //    Console.WriteLine($"Received: {data}");
+            //}
+
         }
     }    
 }

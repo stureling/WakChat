@@ -40,7 +40,7 @@ namespace WpfApp2.Viewmodels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ChatViewmodel(Connection connection, User user)
+        public ChatViewmodel(Connection connection, User user, Window window): base(window)
         {
             this.ExitWindowCommand = new ExitWindowCommand(this);
             this.OpenWindowCommand = new OpenWindowCommand(this);
@@ -49,6 +49,7 @@ namespace WpfApp2.Viewmodels
             this.User = user;
             this.ThisMsg = "";
             this.Messages = new ObservableCollection<Message>();
+            connection.startRecive();
         }
 
         public void OnPropertyChanged(string propertyName)
@@ -60,7 +61,8 @@ namespace WpfApp2.Viewmodels
         public void SendMessage()
         {
             Message mess = new Message() { Msg = ThisMsg, Username = User.Username, Time = DateTime.Now };
-            //connection.Send(User, Msg);
+            string msgstring = mess.toString();
+            connection.Send(User, msgstring);
             Messages.Add(mess);
             Debug.WriteLine("SENDMESSAGE");
             ThisMsg = "";

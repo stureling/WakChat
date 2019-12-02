@@ -27,8 +27,7 @@ namespace WpfApp2.Viewmodels.Commands
         
         public void Execute(object parameter)
         {
-            Window window = (Window)parameter;
-            this.ViewModel.ExitClick(window);
+            this.ViewModel.CloseWindow();
         }
     }
 }

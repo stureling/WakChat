@@ -12,7 +12,7 @@ namespace WpfApp2.Views
         public ChatView(Connection connection, User user)
         {
             InitializeComponent();
-            DataContext = new ChatViewmodel(connection, user);
+            DataContext = new ChatViewmodel(connection, user, this);
         }
     }
 }

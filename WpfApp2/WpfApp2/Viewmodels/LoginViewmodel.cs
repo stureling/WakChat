@@ -31,7 +31,7 @@ namespace WpfApp2.Viewmodels
         public ICommand ConnectCommand { get; set; }
         public ICommand ListenCommand { get; set; }
 
-        public LoginViewmodel()
+        public LoginViewmodel(Window window): base(window)
         {
             this.ExitWindowCommand = new ExitWindowCommand(this);
             this.OpenWindowCommand = new OpenWindowCommand(this);
@@ -55,7 +55,7 @@ namespace WpfApp2.Viewmodels
         {
             ChatView newChat = new ChatView(Connection, User);
             newChat.Show();
-            //Window.GetWindow();
+            CloseWindow();
         }
 
 
