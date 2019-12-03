@@ -67,7 +67,7 @@ namespace WpfApp2.Viewmodels
         }
         public void DisplayMessage(MessageJSON messagee)
         {
-            //DO STUFF
+            Messages.Add(messagee);
         }
     }
 }
