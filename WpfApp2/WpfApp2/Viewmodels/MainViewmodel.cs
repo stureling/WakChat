@@ -19,5 +19,9 @@ namespace WpfApp2.Viewmodels
             this.ExitWindowCommand = new ExitWindowCommand(this);
             this.OpenWindowCommand = new OpenWindowCommand(this);
         }
+        public override void ExitWindow()
+        {
+            CloseWindow();
+        }
     }
 }

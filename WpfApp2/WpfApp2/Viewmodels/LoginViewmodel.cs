@@ -57,12 +57,16 @@ namespace WpfApp2.Viewmodels
             newChat.Show();
             CloseWindow();
         }
+        public override void ExitWindow()
+        {
+            Connection.Abort();
+            CloseWindow();
+        }
 
 
         public void OnPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

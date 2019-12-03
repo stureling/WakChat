@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -16,7 +17,7 @@ namespace WpfApp2.Viewmodels
 {
     public class ChatViewmodel : BaseViewmodel, INotifyPropertyChanged
     {
-        private Connection connection;
+        private Connection Connection { get; set; }
         private string _user;
 
         public User User { get; set; }
@@ -37,7 +38,6 @@ namespace WpfApp2.Viewmodels
         public ICommand ExitWindowCommand { get; set; }
         public ICommand OpenWindowCommand { get; set; }
         public ICommand SendCommand { get; set; }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ChatViewmodel(Connection connection, User user, Window window): base(window)
@@ -45,7 +45,7 @@ namespace WpfApp2.Viewmodels
             this.ExitWindowCommand = new ExitWindowCommand(this);
             this.OpenWindowCommand = new OpenWindowCommand(this);
             this.SendCommand = new SendCommand(this);
-            this.connection = connection;
+            this.Connection = connection;
             this.User = user;
             this.ThisMsg = "";
             this.Messages = new ObservableCollection<Packet>();
@@ -57,17 +57,22 @@ namespace WpfApp2.Viewmodels
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
-
         public void SendMessage()
         {
             Packet mess = new Packet() { ConnectionType = "Message", ConnectionTypeValue = ThisMsg, Username = User.Username, Time = DateTime.Now };
-            connection.Send(mess);
+            Connection.Send(mess);
             Messages.Add(mess);
             ThisMsg = "";
         }
         public void DisplayMessage(Packet messagee)
         {
             Messages.Add(messagee);
+        }
+        public override void ExitWindow()
+        {
+            Connection.Abort();
+            //Thread.Sleep(2000);
+            CloseWindow();
         }
     }
 }

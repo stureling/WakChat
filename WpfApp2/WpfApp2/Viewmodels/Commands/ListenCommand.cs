@@ -47,6 +47,10 @@ namespace WpfApp2.Viewmodels.Commands
                 //Debug.WriteLine("Invalid Username");
                 return false;
             }
+            else if (ViewModel.Connection.Listening)
+            {
+                return false;
+            }
             else
             {
                 //Debug.WriteLine("Button should be clickable");
