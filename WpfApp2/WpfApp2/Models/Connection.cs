@@ -54,14 +54,13 @@ namespace WpfApp2.Viewmodels
             {
                 IPAddress serverIP = IPAddress.Parse(user.IP);
                 Client.Connect(serverIP, user.Port);
-                Message outgoing = new Message() { Msg = "request", Username = user.Username, Time = DateTime.Now };
 
-                MessageJSON json = new MessageJSON(outgoing, "EstablishConnection");
+                Packet json = new Packet() { ConnectionTypeValue = "request", ConnectionType ="EstablishConnection", Username = user.Username, Time = DateTime.Now };
                 Send(json);
 
                 String responseData = String.Empty;
                 responseData = Recieve();
-                MessageJSON responseJson = JsonSerializer.Deserialize<MessageJSON>(responseData);
+                Packet responseJson = JsonSerializer.Deserialize<Packet>(responseData);
                 Console.WriteLine($"Received: {responseData}");
 
                 if (responseJson.ConnectionTypeValue == "Deny")
@@ -122,23 +121,21 @@ namespace WpfApp2.Viewmodels
                         // Get a stream object for reading and writing
                         data = Recieve();
                         Debug.WriteLine($"Received: {data}");
-                        MessageJSON jsonData = JsonSerializer.Deserialize<MessageJSON>(data);
+                        Packet jsonData = JsonSerializer.Deserialize<Packet>(data);
 
                         // Creates message box to inform user of connected 
                         MessageBoxResult result = MessageBox.Show($"User {jsonData.Username} wishes to connect, Accept?", "Alert", MessageBoxButton.YesNo);
                         
                         if (result == MessageBoxResult.Yes)
                         {
-                            Message outgoing = new Message() { Msg = "Accept", Username = user.Username, Time = DateTime.Now };                        
-                            MessageJSON json = new MessageJSON(outgoing, "EstablishConnection");
+                            Packet json = new Packet() { ConnectionTypeValue = "Accept", ConnectionType ="EstablishConnection", Username = user.Username, Time = DateTime.Now };
                             Send(json);
                             loop = false;
                         }
                         
                         else if (result == MessageBoxResult.No)
                         {
-                            Message outgoing = new Message() { Msg = "Deny", Username = user.Username, Time = DateTime.Now };              
-                            MessageJSON json = new MessageJSON(outgoing, "EstablishConnection");
+                            Packet json = new Packet() { ConnectionTypeValue = "Deny", ConnectionType ="EstablishConnection", Username = user.Username, Time = DateTime.Now };
                             Send(json);
                             Debug.WriteLine($"Sent: {data}");
                             Client.Close();
@@ -164,7 +161,7 @@ namespace WpfApp2.Viewmodels
                 Server.Stop();
             }
         }   
-        public void Send(MessageJSON message)
+        public void Send(Packet message)
         {
             string jsonString = JsonSerializer.Serialize(message);
             byte[] msg = Encoding.UTF8.GetBytes(jsonString);
@@ -177,12 +174,12 @@ namespace WpfApp2.Viewmodels
             i = Client.GetStream().Read(bytes, 0, bytes.Length);
             return Encoding.UTF8.GetString(bytes, 0, i);
         }
-        public void startReciving(Action<MessageJSON> callbackSuccess)
+        public void startReciving(Action<Packet> callbackSuccess)
         {
             connectionThread = new Thread(() => ReciveLoop(callbackSuccess));
             connectionThread.Start();
         }
-        public void ReciveLoop(Action<MessageJSON> callbackSuccess)
+        public void ReciveLoop(Action<Packet> callbackSuccess)
         {
             Debug.WriteLine("started looping");
             // RECIEVE DATA
@@ -193,7 +190,7 @@ namespace WpfApp2.Viewmodels
                 if (stream.DataAvailable)
                 {
                     data = Recieve();
-                    MessageJSON converted_data = JsonSerializer.Deserialize<MessageJSON>(data);
+                    Packet converted_data = JsonSerializer.Deserialize<Packet>(data);
                     //Gör om data till det object som förväntas och skicka det med en dispatcher till viewmodellen
                     Application.Current.Dispatcher.Invoke(() => { callbackSuccess(converted_data); });
 
