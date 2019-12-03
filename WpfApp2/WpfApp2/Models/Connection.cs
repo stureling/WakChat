@@ -24,7 +24,7 @@ namespace WpfApp2.Viewmodels
         public TcpClient Client { get; set; }
 
         public TcpListener Server { get; set; }
-        public void Connect(User user, LoginViewmodel viewmodel)
+        public void Connect(User user, Action callbackSuccess = null)
         {
             if(connectionThread != null)
             {
@@ -32,11 +32,11 @@ namespace WpfApp2.Viewmodels
                 connectionThread.Abort();
                 Debug.WriteLine("Thread aborted");
             }
-            connectionThread = new Thread(() => ConnectThread(user, viewmodel));
+            connectionThread = new Thread(() => ConnectThread(user, callbackSuccess));
             connectionThread.Start();
         }
         
-        public void Listen(User user, LoginViewmodel viewmodel)
+        public void Listen(User user, Action callbackSuccess = null)
         {
             if(connectionThread != null)
             {
@@ -44,11 +44,11 @@ namespace WpfApp2.Viewmodels
                 connectionThread.Abort();
                 Debug.WriteLine("Thread aborted");
             }
-            connectionThread = new Thread(() => ListenThread(user, viewmodel));
+            connectionThread = new Thread(() => ListenThread(user, callbackSuccess));
             connectionThread.Start();
         }
         
-        private void ConnectThread(User user, LoginViewmodel viewmodel)
+        private void ConnectThread(User user, Action callbackSuccess = null)
         {
             try
             {
@@ -57,43 +57,25 @@ namespace WpfApp2.Viewmodels
                 Message outgoing = new Message() { Msg = "request", Username = user.Username, Time = DateTime.Now };
 
                 MessageJSON json = new MessageJSON(outgoing, "EstablishConnection");
-                string jsonString = JsonSerializer.Serialize(json);
+                Send(json);
 
-                // Encode the string to bytearray
-                byte[] data = Encoding.UTF8.GetBytes(jsonString);
-
-                // Get a client stream for reading and writing.
-                NetworkStream stream = Client.GetStream();
-
-                //// Send the message to the connected TcpServer. 
-                stream.Write(data, 0, data.Length);
-
-                // Buffer to store the response bytes.
-                data = new Byte[256];
-
-                // String to store the response UTF8 representation.
                 String responseData = String.Empty;
-
-                //// Read the first batch of the TcpServer response bytes.
-                Int32 bytes = stream.Read(data, 0, data.Length);
-                responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+                responseData = Recieve();
                 MessageJSON responseJson = JsonSerializer.Deserialize<MessageJSON>(responseData);
                 Console.WriteLine($"Received: {responseData}");
 
                 if (responseJson.ConnectionTypeValue == "Deny")
                 {
-                    // go back to connection window if denied
                     MessageBox.Show("Connection denied by host", "Alert", MessageBoxButton.OK);
                     Client.Close();
                 }
                 else if (responseJson.ConnectionTypeValue == "Accept")
                 {
-                    // continue to next window
-                    //StartChat();
-
-                    Application.Current.Dispatcher.Invoke(() => { viewmodel.StartChat(); });
+                    if (callbackSuccess != null)
+                    {
+                        Application.Current.Dispatcher.Invoke(callbackSuccess);
+                    }
                 }
-                
                 else
                 {
                     Debug.WriteLine("wierd value");
@@ -115,26 +97,21 @@ namespace WpfApp2.Viewmodels
             }
         }
 
-        private void ListenThread(User user, LoginViewmodel viewmodel)
+        private void ListenThread(User user, Action callbackSuccess)
         {
             try
             {
                 IPAddress localAddr = IPAddress.Parse("127.0.0.1");
-                
-                // TcpListener server = new TcpListener(port);
                 Server = new TcpListener(localAddr, user.Port);
-                
-                // Start listening for client requests.
                 Server.Start();
                 
                 // Buffer for reading data
                 Byte[] bytes = new Byte[256];
-                String data = null;
+                String data;
 
                 Debug.Write("Waiting for a connection... ");
-
-                // Enter the listening loop.
-                while (true)
+                bool loop = true;
+                while (loop)
                 {
                     if (Server.Pending())
                     {
@@ -143,14 +120,7 @@ namespace WpfApp2.Viewmodels
                         data = null;
 
                         // Get a stream object for reading and writing
-                        NetworkStream stream = Client.GetStream();
-
-                        int i;
-                        
-                        i = stream.Read(bytes, 0, bytes.Length);
-
-                        
-                        data = Encoding.UTF8.GetString(bytes, 0, i);
+                        data = Recieve();
                         Debug.WriteLine($"Received: {data}");
                         MessageJSON jsonData = JsonSerializer.Deserialize<MessageJSON>(data);
 
@@ -159,32 +129,27 @@ namespace WpfApp2.Viewmodels
                         
                         if (result == MessageBoxResult.Yes)
                         {
-                            Message outgoing = new Message() { Msg = "Accept", Username = user.Username, Time = DateTime.Now };
-                            // Send back a response.                        
+                            Message outgoing = new Message() { Msg = "Accept", Username = user.Username, Time = DateTime.Now };                        
                             MessageJSON json = new MessageJSON(outgoing, "EstablishConnection");
-                            string response = JsonSerializer.Serialize(json);
-                            byte[] msg = Encoding.UTF8.GetBytes(response);
-                            stream.Write(msg, 0, msg.Length);
-                            Debug.WriteLine($"Sent: {data}");
-                            break;
+                            Send(json);
+                            loop = false;
                         }
                         
                         else if (result == MessageBoxResult.No)
                         {
-                            Message outgoing = new Message() { Msg = "Deny", Username = user.Username, Time = DateTime.Now };
-                            // Send back a response.                       
+                            Message outgoing = new Message() { Msg = "Deny", Username = user.Username, Time = DateTime.Now };              
                             MessageJSON json = new MessageJSON(outgoing, "EstablishConnection");
-                            string response = JsonSerializer.Serialize(json);
-                            byte[] msg = Encoding.UTF8.GetBytes(response);
-                            stream.Write(msg, 0, msg.Length);
+                            Send(json);
                             Debug.WriteLine($"Sent: {data}");
-                            
                             Client.Close();
                             Debug.Write("Waiting for a connection... ");
                         }
                     }
                 }
-                Application.Current.Dispatcher.Invoke(() => { viewmodel.StartChat(); });
+                if (callbackSuccess != null)
+                {
+                    Application.Current.Dispatcher.Invoke(callbackSuccess);
+                }
             }
             catch (SocketException e)
             {
@@ -199,51 +164,41 @@ namespace WpfApp2.Viewmodels
                 Server.Stop();
             }
         }   
-        public void Send(Message message)
+        public void Send(MessageJSON message)
         {
-            MessageJSON json = new MessageJSON(message, "Message");
-            string jsonString = JsonSerializer.Serialize(json);
-            Debug.WriteLine("sending message ");
-
-            NetworkStream stream = Client.GetStream();
-
+            string jsonString = JsonSerializer.Serialize(message);
             byte[] msg = Encoding.UTF8.GetBytes(jsonString);
-            stream.Write(msg, 0, msg.Length);
-
+            Client.GetStream().Write(msg, 0, msg.Length);
         }
-        public void startRecive()
+        public string Recieve()
         {
-            connectionThread = new Thread(() => ReciveLoop());
+            int i;
+            Byte[] bytes = new Byte[256];
+            i = Client.GetStream().Read(bytes, 0, bytes.Length);
+            return Encoding.UTF8.GetString(bytes, 0, i);
+        }
+        public void startReciving(Action<MessageJSON> callbackSuccess)
+        {
+            connectionThread = new Thread(() => ReciveLoop(callbackSuccess));
             connectionThread.Start();
         }
-        public void ReciveLoop()
+        public void ReciveLoop(Action<MessageJSON> callbackSuccess)
         {
-            NetworkStream stream = Client.GetStream();
-
             Debug.WriteLine("started looping");
             // RECIEVE DATA
-            Byte[] bytes = new Byte[256];
-            int i;
+            NetworkStream stream = Client.GetStream(); 
             string data;
-
             while (true)
             {
                 if (stream.DataAvailable)
                 {
-                    i = stream.Read(bytes, 0, bytes.Length);
-                    data = Encoding.UTF8.GetString(bytes, 0, i);
-                    Debug.WriteLine($" Recived message : {data}");
+                    data = Recieve();
+                    MessageJSON converted_data = JsonSerializer.Deserialize<MessageJSON>(data);
+                    //Gör om data till det object som förväntas och skicka det med en dispatcher till viewmodellen
+                    Application.Current.Dispatcher.Invoke(() => { callbackSuccess(converted_data); });
+
                 }
             }
-            Debug.WriteLine("stopped looping");
-
-            //WHILE CONNECTION NOT TERMINATED-LOOP
-            //while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
-            //{
-            //    data = Encoding.UTF8.GetString(bytes, 0, i);
-            //    Console.WriteLine($"Received: {data}");
-            //}
-
         }
     }    
 }

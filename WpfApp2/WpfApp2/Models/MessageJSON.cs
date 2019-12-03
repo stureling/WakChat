@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp2.Models
 {
-    class MessageJSON
+    public class MessageJSON
     {
         public string Username { get; set; }
         public string ConnectionType { get; set; }

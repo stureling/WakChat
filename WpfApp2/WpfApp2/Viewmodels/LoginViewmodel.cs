@@ -43,12 +43,12 @@ namespace WpfApp2.Viewmodels
 
         public void Connect()
         {
-            Connection.Connect(User, this);
+            Connection.Connect(User, StartChat);
         }
 
         public void Listen()
         {
-            Connection.Listen(User, this);
+            Connection.Listen(User, StartChat);
         }
 
         public void StartChat()

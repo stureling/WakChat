@@ -33,7 +33,7 @@ namespace WpfApp2.Viewmodels
                 OnPropertyChanged(ThisMsg);
             }
         }
-        public ObservableCollection<Message> Messages { get; set; }
+        public ObservableCollection<MessageJSON> Messages { get; set; }
         public ICommand ExitWindowCommand { get; set; }
         public ICommand OpenWindowCommand { get; set; }
         public ICommand SendCommand { get; set; }
@@ -48,8 +48,8 @@ namespace WpfApp2.Viewmodels
             this.connection = connection;
             this.User = user;
             this.ThisMsg = "";
-            this.Messages = new ObservableCollection<Message>();
-            connection.startRecive();
+            this.Messages = new ObservableCollection<MessageJSON>();
+            connection.startReciving(RECIVEMESSAGEFUNC);
         }
 
         public void OnPropertyChanged(string propertyName)
@@ -60,7 +60,7 @@ namespace WpfApp2.Viewmodels
 
         public void SendMessage()
         {
-            Message mess = new Message() { Msg = ThisMsg, Username = User.Username, Time = DateTime.Now };
+            MessageJSON mess = new MessageJSON() { ConnectionType = "Message", ConnectionTypeValue = ThisMsg, Username = User.Username, Time = DateTime.Now };
             connection.Send(mess);
             Messages.Add(mess);
             ThisMsg = "";
