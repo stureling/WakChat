@@ -49,7 +49,7 @@ namespace WpfApp2.Viewmodels
             this.User = user;
             this.ThisMsg = "";
             this.Messages = new ObservableCollection<MessageJSON>();
-            connection.startReciving(RECIVEMESSAGEFUNC);
+            connection.startReciving(DisplayMessage);
         }
 
         public void OnPropertyChanged(string propertyName)
@@ -64,6 +64,10 @@ namespace WpfApp2.Viewmodels
             connection.Send(mess);
             Messages.Add(mess);
             ThisMsg = "";
+        }
+        public void DisplayMessage(MessageJSON messagee)
+        {
+            //DO STUFF
         }
     }
 }
