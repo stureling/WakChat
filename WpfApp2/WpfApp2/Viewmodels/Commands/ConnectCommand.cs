@@ -34,17 +34,17 @@ namespace WpfApp2.Viewmodels.Commands
         {
             if (String.IsNullOrWhiteSpace(ViewModel.User.Username) || String.IsNullOrWhiteSpace(ViewModel.User.Port.ToString()))
             {
-                Debug.WriteLine("Null or whitespace");
+                //Debug.WriteLine("Null or whitespace");
                 return false;
             }
             if (ViewModel.User.Port < 1024 || ViewModel.User.Port > 65535)
             {
-                Debug.WriteLine("Invalid Port");
+                //Debug.WriteLine("Invalid Port");
                 return false;
             }
             else if (ViewModel.User.Username.Length == 0 || ViewModel.User.Username.Length > 24 || !Regex.Match(ViewModel.User.Username, @"^[\p{L}\p{N}]+$").Success)
             {
-                Debug.WriteLine("Invalid Username");
+                //Debug.WriteLine("Invalid Username");
                 return false;
             }
             else if (!Regex.Match(ViewModel.User.IP, @"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$").Success)
@@ -54,7 +54,7 @@ namespace WpfApp2.Viewmodels.Commands
             }
             else
             {
-                Debug.WriteLine("Button should be clickable");
+                //Debug.WriteLine("Button should be clickable");
                 return true;
             }
         }

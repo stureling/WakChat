@@ -20,20 +20,17 @@ namespace WpfApp2.Viewmodels.Commands
 
         public SendCommand(ChatViewmodel viewModel)
         {
-            Debug.WriteLine("CONSTRUCTOR");
             this.ViewModel = viewModel;
         }
 
         public bool CanExecute(object parameter)
 
         {
-            Debug.WriteLine("CANEXECUTE");
             return !String.IsNullOrWhiteSpace(ViewModel.ThisMsg);
         }
 
         public void Execute(object parameter)
         {
-            Debug.WriteLine("EXECUTE");
             this.ViewModel.SendMessage();
         }
     }

@@ -54,8 +54,9 @@ namespace WpfApp2.Viewmodels
             {
                 IPAddress serverIP = IPAddress.Parse(user.IP);
                 Client.Connect(serverIP, user.Port);
+                Message outgoing = new Message() { Msg = "request", Username = user.Username, Time = DateTime.Now };
 
-                MessageJSON json = new MessageJSON(user.Username, "EstablishConnection", "request");
+                MessageJSON json = new MessageJSON(outgoing, "EstablishConnection");
                 string jsonString = JsonSerializer.Serialize(json);
 
                 // Encode the string to bytearray
@@ -158,8 +159,9 @@ namespace WpfApp2.Viewmodels
                         
                         if (result == MessageBoxResult.Yes)
                         {
+                            Message outgoing = new Message() { Msg = "Accept", Username = user.Username, Time = DateTime.Now };
                             // Send back a response.                        
-                            MessageJSON json = new MessageJSON(user.Username, "EstablishConnection", "Accept");
+                            MessageJSON json = new MessageJSON(outgoing, "EstablishConnection");
                             string response = JsonSerializer.Serialize(json);
                             byte[] msg = Encoding.UTF8.GetBytes(response);
                             stream.Write(msg, 0, msg.Length);
@@ -169,8 +171,9 @@ namespace WpfApp2.Viewmodels
                         
                         else if (result == MessageBoxResult.No)
                         {
-                            // Send back a response.                        
-                            MessageJSON json = new MessageJSON(user.Username, "EstablishConnection", "Deny");
+                            Message outgoing = new Message() { Msg = "Deny", Username = user.Username, Time = DateTime.Now };
+                            // Send back a response.                       
+                            MessageJSON json = new MessageJSON(outgoing, "EstablishConnection");
                             string response = JsonSerializer.Serialize(json);
                             byte[] msg = Encoding.UTF8.GetBytes(response);
                             stream.Write(msg, 0, msg.Length);
@@ -196,9 +199,9 @@ namespace WpfApp2.Viewmodels
                 Server.Stop();
             }
         }   
-        public void Send(User user, string message)
+        public void Send(Message message)
         {
-            MessageJSON json = new MessageJSON(user.Username, "Message", message);
+            MessageJSON json = new MessageJSON(message, "Message");
             string jsonString = JsonSerializer.Serialize(json);
             Debug.WriteLine("sending message ");
 

@@ -14,13 +14,14 @@ namespace WpfApp2.Models
         public string ConnectionTypeValue { get; set; }
         public DateTime Time { get; set; }
         public MessageJSON() { }
-        public MessageJSON(string username, string connectionType, string connectionTypeValue)
+        public MessageJSON(Message message, string connectionType)
         {
-            Username = username;
+            Username = message.Username;
+            Time = message.Time;
             ConnectionType = connectionType;
-            ConnectionTypeValue = connectionTypeValue;
-            Time = DateTime.Now;
+            ConnectionTypeValue = message.Msg;
         }
+        /*
         public MessageJSON(string username, DateTime time, string connectionType, string connectionTypeValue)
         {
             Username = username;
@@ -28,6 +29,7 @@ namespace WpfApp2.Models
             ConnectionTypeValue = connectionTypeValue;
             Time = time;
         }
+        */
         public string toString()
         {
             return JsonSerializer.Serialize(this);

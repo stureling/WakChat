@@ -61,10 +61,8 @@ namespace WpfApp2.Viewmodels
         public void SendMessage()
         {
             Message mess = new Message() { Msg = ThisMsg, Username = User.Username, Time = DateTime.Now };
-            string msgstring = mess.toString();
-            connection.Send(User, msgstring);
+            connection.Send(mess);
             Messages.Add(mess);
-            Debug.WriteLine("SENDMESSAGE");
             ThisMsg = "";
         }
     }
