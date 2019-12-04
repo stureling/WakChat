@@ -10,7 +10,7 @@ using WpfApp2.Views;
 
 namespace WpfApp2.Viewmodels
 {
-    public class BaseViewmodel
+    public abstract class BaseViewmodel
     {
         private Window Window;
         public BaseViewmodel() { }
@@ -18,13 +18,12 @@ namespace WpfApp2.Viewmodels
         {
             Window = window;
         }
-        public virtual void CloseWindow()
+
+        public virtual void ExitWindow()
         {
-            if (Window != null)
-            {
-                Window.Close();
-            }
+            Window.Close();
         }
+		
         public void EnterClick()
         {
             LoginView newWindow = new LoginView();

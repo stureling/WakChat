@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -17,7 +18,7 @@ namespace WpfApp2.Viewmodels
 {
     public class ChatViewmodel : BaseViewmodel, INotifyPropertyChanged
     {
-        private Connection connection;
+        private Connection Connection { get; set; }
         private string _user;
 
         public User User { get; set; }
@@ -40,7 +41,6 @@ namespace WpfApp2.Viewmodels
         public ICommand OpenWindowCommand { get; set; }
         public ICommand SendCommand { get; set; }
         private String path = AppDomain.CurrentDomain.BaseDirectory + @"history\history.json";
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ChatViewmodel(Connection connection, User user, Window window): base(window)
@@ -48,23 +48,19 @@ namespace WpfApp2.Viewmodels
             this.ExitWindowCommand = new ExitWindowCommand(this);
             this.OpenWindowCommand = new OpenWindowCommand(this);
             this.SendCommand = new SendCommand(this);
-            this.connection = connection;
+            this.Connection = connection;
             this.User = user;
             this.ThisMsg = "";
             this.Messages = new ObservableCollection<Packet>();
             connection.startReciving(DisplayMessage);
         }
-        ~ChatViewmodel()
-        {
-;
-        }
 
-        public override void CloseWindow()
+        public override void ExitWindow()
         {
             List<Packet> lst = Messages.ToList();
             history.AppendToFile(lst);
 
-            base.CloseWindow();
+            base.ExitWindow();
         }
 
         public void OnPropertyChanged(string propertyName)
@@ -72,17 +68,22 @@ namespace WpfApp2.Viewmodels
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
-
         public void SendMessage()
         {
             Packet mess = new Packet() { ConnectionType = "Message", ConnectionTypeValue = ThisMsg, Username = User.Username, Time = DateTime.Now };
-            connection.Send(mess);
+            Connection.Send(mess);
             Messages.Add(mess);
             ThisMsg = "";
         }
         public void DisplayMessage(Packet message)
         {
             Messages.Add(message);
+        }
+        public override void ExitWindow()
+        {
+            Connection.Abort();
+            //Thread.Sleep(2000);
+            CloseWindow();
         }
     }
 }

@@ -55,14 +55,18 @@ namespace WpfApp2.Viewmodels
         {
             ChatView newChat = new ChatView(Connection, User);
             newChat.Show();
-            CloseWindow();
+            base.ExitWindow();
+        }
+        public override void ExitWindow()
+        {
+            Connection.Abort();
+            base.ExitWindow();
         }
 
 
         public void OnPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
