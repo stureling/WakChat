@@ -113,9 +113,9 @@ namespace WpfApp2.Viewmodels
             string imagestring = Convert.ToBase64String(imageByte);
             return imagestring;
         }
-        public void DisplayMessage(Packet messagee)
+        public void DisplayMessage(Packet packet)
         {
-            Messages.Add(message);
+            Messages.Add(packet);
         }
         public void DisplayPicture(Packet packet)
         {
@@ -137,11 +137,6 @@ namespace WpfApp2.Viewmodels
             string path = AppDomain.CurrentDomain.BaseDirectory + @"\imagê\" + packet.ConnectionType + packet.Username + packet.Time.Date + ".png";
             image.Save(path, ImageFormat.Png);
             return path;
-        }
-        public override void ExitWindow()
-        {
-            Connection.Abort();
-            CloseWindow();
         }
     }
 }
