@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace WpfApp2.Viewmodels.Commands
 {
-    public class SendCommand : ICommand
+    public class SendImageCommand : ICommand
     {
         public event EventHandler CanExecuteChanged
         {
@@ -18,20 +18,19 @@ namespace WpfApp2.Viewmodels.Commands
 
         public ChatViewmodel ViewModel { get; set; }
 
-        public SendCommand(ChatViewmodel viewModel)
+        public SendImageCommand(ChatViewmodel viewModel)
         {
             this.ViewModel = viewModel;
         }
 
         public bool CanExecute(object parameter)
-
         {
-            return !String.IsNullOrWhiteSpace(ViewModel.ThisMsg) && ViewModel.Connection.Client.Connected;
+            return ViewModel.Connection.Client.Connected;
         }
 
         public void Execute(object parameter)
         {
-            this.ViewModel.SendMessage();
+            this.ViewModel.SendPicture();
         }
     }
 }

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -13,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using WpfApp2.Models;
 using WpfApp2.Viewmodels.Commands;
 using WpfApp2.Views;
@@ -37,21 +40,23 @@ namespace WpfApp2.Viewmodels
             this.OpenWindowCommand = new OpenWindowCommand(this);
             this.ConnectCommand = new ConnectCommand(this);
             this.ListenCommand = new ListenCommand(this);
-            this.Connection = new Connection();
             this.User = new User();
+            this.Connection = new Connection();
         }
 
         public void Connect()
         {
-            Connection.Connect(User, StartChat);
+            Connection.Actions["ConnectionAccept"] = (Action<Packet>) StartChat;
+            Connection.Connect(User);
         }
 
         public void Listen()
         {
-            Connection.Listen(User, StartChat);
+            Connection.Actions["ConnectionAccept"] = (Action<Packet>) StartChat;
+            Connection.Listen(User);
         }
 
-        public void StartChat()
+        public void StartChat(Packet packet)
         {
             ChatView newChat = new ChatView(Connection, User);
             newChat.Show();
