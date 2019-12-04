@@ -18,7 +18,7 @@ namespace WpfApp2.Viewmodels
         {
             Window = window;
         }
-        public void CloseWindow()
+        public virtual void CloseWindow()
         {
             if (Window != null)
             {

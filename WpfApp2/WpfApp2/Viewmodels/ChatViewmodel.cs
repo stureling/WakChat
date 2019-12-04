@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -20,6 +21,7 @@ namespace WpfApp2.Viewmodels
         private string _user;
 
         public User User { get; set; }
+        public History history = new History();
    
         public string ThisMsg
         {
@@ -37,6 +39,7 @@ namespace WpfApp2.Viewmodels
         public ICommand ExitWindowCommand { get; set; }
         public ICommand OpenWindowCommand { get; set; }
         public ICommand SendCommand { get; set; }
+        private String path = AppDomain.CurrentDomain.BaseDirectory + @"history\history.json";
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -50,6 +53,18 @@ namespace WpfApp2.Viewmodels
             this.ThisMsg = "";
             this.Messages = new ObservableCollection<Packet>();
             connection.startReciving(DisplayMessage);
+        }
+        ~ChatViewmodel()
+        {
+;
+        }
+
+        public override void CloseWindow()
+        {
+            List<Packet> lst = Messages.ToList();
+            history.AppendToFile(lst);
+
+            base.CloseWindow();
         }
 
         public void OnPropertyChanged(string propertyName)
@@ -65,9 +80,9 @@ namespace WpfApp2.Viewmodels
             Messages.Add(mess);
             ThisMsg = "";
         }
-        public void DisplayMessage(Packet messagee)
+        public void DisplayMessage(Packet message)
         {
-            Messages.Add(messagee);
+            Messages.Add(message);
         }
     }
 }
