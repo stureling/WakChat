@@ -18,11 +18,12 @@ namespace WpfApp2.Viewmodels
         {
             Window = window;
         }
-        public abstract void ExitWindow();
-        public void CloseWindow()
+
+        public virtual void ExitWindow()
         {
             Window.Close();
         }
+		
         public void EnterClick()
         {
             LoginView newWindow = new LoginView();

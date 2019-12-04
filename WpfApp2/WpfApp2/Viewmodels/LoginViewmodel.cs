@@ -60,12 +60,12 @@ namespace WpfApp2.Viewmodels
         {
             ChatView newChat = new ChatView(Connection, User);
             newChat.Show();
-            CloseWindow();
+            base.ExitWindow();
         }
         public override void ExitWindow()
         {
             Connection.Abort();
-            CloseWindow();
+            base.ExitWindow();
         }
 
 

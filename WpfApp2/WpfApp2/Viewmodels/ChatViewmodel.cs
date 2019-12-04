@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,6 +28,7 @@ namespace WpfApp2.Viewmodels
         private string _user;
 
         public User User { get; set; }
+        public History history = new History();
    
         public string ThisMsg
         {
@@ -45,6 +47,7 @@ namespace WpfApp2.Viewmodels
         public ICommand OpenWindowCommand { get; set; }
         public ICommand SendCommand { get; set; }
         public ICommand SendImageCommand { get; set; }
+        private String path = AppDomain.CurrentDomain.BaseDirectory + @"history\history.json";
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ChatViewmodel(Connection connection, User user, Window window): base(window)
@@ -60,6 +63,14 @@ namespace WpfApp2.Viewmodels
             connection.Actions["Message"] = (Action<Packet>) DisplayMessage;
             connection.Actions["Image"] = (Action<Packet>) DisplayPicture;
             connection.startReciving();
+        }
+
+        public override void ExitWindow()
+        {
+            List<Packet> lst = Messages.ToList();
+            history.AppendToFile(lst);
+
+            base.ExitWindow();
         }
 
         public void OnPropertyChanged(string propertyName)
@@ -104,7 +115,7 @@ namespace WpfApp2.Viewmodels
         }
         public void DisplayMessage(Packet messagee)
         {
-            Messages.Add(messagee);
+            Messages.Add(message);
         }
         public void DisplayPicture(Packet packet)
         {
