@@ -72,14 +72,12 @@ namespace WpfApp2.Viewmodels
             IEnumerable<Conversation> queryConversations;
             if(Filter != String.Empty)
             {
-                Debug.WriteLine("Saddle up");
                 queryConversations = from conv in ConversationList
                                      where conv.ID.Contains(Filter)
                                      select conv;
             }
             else
             {
-                Debug.WriteLine("Saddle down");
                 Debug.WriteLine(ConversationList.Count());
                 queryConversations = from conv in ConversationList
                                      select conv;
@@ -88,7 +86,7 @@ namespace WpfApp2.Viewmodels
             Conversations = new ObservableCollection<Conversation>(queryConversations);
         }
 
-        public void OpenHistory(Conversation convo)
+        public void OpenHistory(List<Packet> convo)
         {
             HistoryView history = new HistoryView(new HistoryViewmodel(convo));
             history.Show();
