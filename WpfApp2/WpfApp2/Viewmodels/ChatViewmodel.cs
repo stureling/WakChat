@@ -61,6 +61,7 @@ namespace WpfApp2.Viewmodels
             Messages = new ObservableCollection<Packet>();
             connection.Actions["Message"] = (Action<Packet>) DisplayMessage;
             connection.Actions["Image"] = (Action<Packet>) DisplayPicture;
+            connection.Actions["Buzz"] = (Action<Packet>) Buzz;
             connection.startReciving();
         }
 
@@ -68,7 +69,7 @@ namespace WpfApp2.Viewmodels
         {
             List<Packet> lst = Messages.ToList();
             history.AppendToFile(lst, User.Username);
-
+            Connection.Abort();
             base.ExitWindow();
         }
 
@@ -79,29 +80,42 @@ namespace WpfApp2.Viewmodels
         }
         public void SendMessage()
         {
-            Packet mess = new Packet() { ConnectionType = "Message", ConnectionTypeValue = ThisMsg, Username = User.Username, Time = DateTime.Now };
+            Packet mess;
+            if(ThisMsg.ToLower() == "buzz")
+            {
+                mess = new Packet() { ConnectionType = "Buzz", ConnectionTypeValue = ThisMsg, Username = User.Username, Time = DateTime.Now };
+            }
+            else
+            {
+                mess = new Packet() { ConnectionType = "Message", ConnectionTypeValue = ThisMsg, Username = User.Username, Time = DateTime.Now };
+            }
             Connection.Send(mess);
             Messages.Add(mess);
             ThisMsg = "";
         }
-        public void SendPicture()
+        public void Buzz(Packet packet = null)
+        {
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + @"buzz\buzz.wav");
+            player.Play();
+        }
+        public void SendImage()
         {
 
-            string imagestring = OpenPicture();
-            Packet packet = new Packet() { ConnectionType = "Image", ConnectionTypeValue = imagestring};
+            string imagestring = OpenImage();
+            Packet packet = new Packet() {Username = User.Username, Time = DateTime.Now, ConnectionType = "Image", ConnectionTypeValue = imagestring};
             Connection.Send(packet);
-           
         }
-        public string OpenPicture()
+        public string OpenImage()
         { 
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-            ofd.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+            ofd.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
             Image img = null;
             if (ofd.ShowDialog() == true)
             {
                 img = Image.FromFile(ofd.FileName);
             }
+            Messages.Add(new Packet() { Username = User.Username, Time = DateTime.Now, ConnectionType = "Image", ConnectionTypeValue = ofd.FileName});
 
             Byte[] imageByte = null;
             using (var ms = new MemoryStream())
@@ -118,8 +132,6 @@ namespace WpfApp2.Viewmodels
         }
         public void DisplayPicture(Packet packet)
         {
-            MessageBox.Show("Got a picture for ya boss!", "Alert", MessageBoxButton.OK);
-
             string filePath = SaveImage(packet);
             packet.ConnectionTypeValue = filePath;
             Messages.Add(packet);
@@ -133,7 +145,8 @@ namespace WpfApp2.Viewmodels
             {
                 image = Image.FromStream(ms);
             }
-            string path = AppDomain.CurrentDomain.BaseDirectory + @"\imagê\" + packet.ConnectionType + packet.Username + packet.Time.Date + ".png";
+            string path = AppDomain.CurrentDomain.BaseDirectory + @"image\"+ "test" + packet.Username + packet.Time.Millisecond.ToString() + ".png";
+            Debug.WriteLine(path);
             image.Save(path, ImageFormat.Png);
             return path;
         }
