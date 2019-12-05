@@ -42,17 +42,16 @@ namespace WpfApp2.Viewmodels
             this.ListenCommand = new ListenCommand(this);
             this.User = new User();
             this.Connection = new Connection();
+            Connection.Actions["ConnectionAccept"] = (Action<Packet>) StartChat;
         }
 
         public void Connect()
         {
-            Connection.Actions["ConnectionAccept"] = (Action<Packet>) StartChat;
             Connection.Connect(User);
         }
 
         public void Listen()
         {
-            Connection.Actions["ConnectionAccept"] = (Action<Packet>) StartChat;
             Connection.Listen(User);
         }
 

@@ -69,7 +69,7 @@ namespace WpfApp2.Viewmodels
         {
             List<Packet> lst = Messages.ToList();
             history.AppendToFile(lst);
-
+            Connection.Abort();
             base.ExitWindow();
         }
 
@@ -89,7 +89,7 @@ namespace WpfApp2.Viewmodels
         {
 
             string imagestring = OpenPicture();
-            Packet packet = new Packet() { ConnectionType = "Image", ConnectionTypeValue = imagestring};
+            Packet packet = new Packet() {Username = User.Username, Time = DateTime.Now, ConnectionType = "Image", ConnectionTypeValue = imagestring};
             Connection.Send(packet);
            
         }
@@ -97,7 +97,7 @@ namespace WpfApp2.Viewmodels
         { 
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-            ofd.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+            ofd.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
             Image img = null;
             if (ofd.ShowDialog() == true)
             {
@@ -134,7 +134,8 @@ namespace WpfApp2.Viewmodels
             {
                 image = Image.FromStream(ms);
             }
-            string path = AppDomain.CurrentDomain.BaseDirectory + @"\imagê\" + packet.ConnectionType + packet.Username + packet.Time.Date + ".png";
+            string path = AppDomain.CurrentDomain.BaseDirectory + @"image\"+ "test" + packet.Username + packet.Time.Millisecond.ToString() + ".png";
+            Debug.WriteLine(path);
             image.Save(path, ImageFormat.Png);
             return path;
         }

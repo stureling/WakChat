@@ -24,6 +24,7 @@ namespace WpfApp2.Viewmodels
             Actions = new Hashtable();
             Actions["ConnectionRequest"] = (Action<Packet>) QueryUserOnConnect;
             Actions["ConnectionDeny"] = (Action<Packet>) ConnectionDeny;
+            Actions["Disconnect"] = (Action<Packet>) Disconnect;
         }
         private Thread connectionThread;
         private  User User { get; set; }
@@ -155,6 +156,7 @@ namespace WpfApp2.Viewmodels
                         HandlePacket(converted_data);
                     }
                 }
+                MessageBox.Show("User disconnected", "Alert", MessageBoxButton.OK);
             }
             catch (SocketException e)
             {
@@ -188,11 +190,16 @@ namespace WpfApp2.Viewmodels
             {
                 Packet p = new Packet() { ConnectionType = "Disconnect", ConnectionTypeValue = "Disconnect", Time = DateTime.Now, Username = User.Username };
                 Send(p);
+                Client.Close();
             }
             if (connectionThread != null)
             {
                 connectionThread.Abort();
             }
+        }
+        public void Disconnect(Packet packet)
+        {
+            Client.Close();
         }
         public void ConnectionDeny(Packet packet)
         {
