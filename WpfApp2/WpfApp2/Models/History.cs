@@ -54,9 +54,7 @@ namespace WpfApp2.Models
         public void AppendToFile(List<Packet> messages, String username)
         {
             Histories.Add(new Conversation(messages, username));
-            Histories.Add(new Conversation(messages, username));
             File.WriteAllText(path, JsonSerializer.Serialize(Histories));
-            Debug.WriteLine(path);
             Debug.WriteLine(JsonSerializer.Serialize(Histories));
         }
 

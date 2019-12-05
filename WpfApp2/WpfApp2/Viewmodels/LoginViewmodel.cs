@@ -36,12 +36,12 @@ namespace WpfApp2.Viewmodels
 
         public LoginViewmodel(Window window): base(window)
         {
-            this.ExitWindowCommand = new ExitWindowCommand(this);
-            this.OpenWindowCommand = new OpenWindowCommand(this);
-            this.ConnectCommand = new ConnectCommand(this);
-            this.ListenCommand = new ListenCommand(this);
-            this.User = new User();
-            this.Connection = new Connection();
+            ExitWindowCommand = new ExitWindowCommand(this);
+            OpenWindowCommand = new OpenWindowCommand(this);
+            ConnectCommand = new ConnectCommand(this);
+            ListenCommand = new ListenCommand(this);
+            User = new User();
+            Connection = new Connection();
             Connection.Actions["ConnectionAccept"] = (Action<Packet>) StartChat;
         }
 

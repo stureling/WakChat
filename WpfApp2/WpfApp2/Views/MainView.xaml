@@ -21,16 +21,16 @@
         <StackPanel Margin="10,50,0,0" HorizontalAlignment="Left" Height="340" Width="400"  VerticalAlignment="Top"
                     Grid.Row="0" Grid.Column="0">
             <ScrollViewer Height="340">
-                <ItemsControl ItemsSource="{Binding Path=Conversations}">
+                <ItemsControl ItemsSource="{Binding Path=Conversations, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Content="{Binding ID}"/>
+                            <Button Content="{Binding ID}" Command="{Binding OpenWindowCommand}" CommandParameter="{Binding Packet}"/>
 
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
         </StackPanel>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="{Binding Filter}" VerticalAlignment="Top" Width="380" />
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="{Binding Path=Filter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="380" />
     </Grid>
 </Window>

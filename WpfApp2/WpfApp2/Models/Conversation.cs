@@ -12,10 +12,10 @@ namespace WpfApp2.Models
         public string ID { get; set; }
 
         
-        Conversation()
+        public Conversation()
         {
-            Packet = new List<Packet>();
-            ID = "";
+            /*Packet = new List<Packet>();
+            ID = "";*/
         }
         public Conversation(List<Packet> packets, String username)
         {
