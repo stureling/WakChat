@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,19 +13,32 @@ using WpfApp2.Viewmodels.Commands;
 
 namespace WpfApp2.Viewmodels
 {
-    class MainViewmodel : BaseViewmodel
+    class MainViewmodel : BaseViewmodel, INotifyPropertyChanged
     {
-        private String path = AppDomain.CurrentDomain.BaseDirectory + @"history\history.json";
-        public List<Conversation> Histories { get; set; }
+        public ObservableCollection<Conversation> Conversations { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public History _history;
+
         public ICommand ExitWindowCommand { get; set; }
         public ICommand OpenWindowCommand { get; set; }
 
         public MainViewmodel(): base()
         {
-            this.ExitWindowCommand = new ExitWindowCommand(this);
-            this.OpenWindowCommand = new OpenWindowCommand(this);
-            var temp = new History(); 
-            Histories = temp.ReadFromFile();
+            ExitWindowCommand = new ExitWindowCommand(this);
+            OpenWindowCommand = new OpenWindowCommand(this);
+            Conversations = new ObservableCollection<Conversation>();
+            _history = new History();
+            foreach(var item in _history.Histories)
+            {
+                Conversations.Add(item);
+                Debug.WriteLine(item);
+            }
+        }
+        public void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

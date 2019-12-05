@@ -21,10 +21,10 @@
         <StackPanel Margin="10,10,0,0" HorizontalAlignment="Left" Height="340" Width="400"  VerticalAlignment="Top"
                     Grid.Row="0" Grid.Column="0">
             <ScrollViewer Height="340">
-                <ItemsControl ItemsSource="{Binding Path=History}">
+                <ItemsControl ItemsSource="{Binding Path=Conversations}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Content="{Binding Time}"></Button>
+                            <Button Content="{Binding ID}"/>
 
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

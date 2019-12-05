@@ -8,15 +8,20 @@ namespace WpfApp2.Models
 {
     public class Conversation
     {
-        public List<Packet> Convo { get; set; }
+        public List<Packet> Packet { get; set; }
+        public string ID { get; set; }
 
+        
         Conversation()
         {
-            this.Convo = new List<Packet>();
+            Packet = new List<Packet>();
+            ID = "";
         }
-        public Conversation(List<Packet> packets)
+        public Conversation(List<Packet> packets, String username)
         {
-            Convo = packets;
+            String date = DateTime.Now.Date.ToShortDateString();
+            ID = username + " " + date;
+            Packet = packets;
         }
     }
 }

@@ -39,7 +39,7 @@ namespace WpfApp2.Viewmodels
             set
             {
                 _user = value;
-                OnPropertyChanged(ThisMsg);
+                OnPropertyChanged("ThisMsg");
             }
         }
         public ObservableCollection<Packet> Messages { get; set; }
@@ -47,19 +47,18 @@ namespace WpfApp2.Viewmodels
         public ICommand OpenWindowCommand { get; set; }
         public ICommand SendCommand { get; set; }
         public ICommand SendImageCommand { get; set; }
-        private String path = AppDomain.CurrentDomain.BaseDirectory + @"history\history.json";
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ChatViewmodel(Connection connection, User user, Window window): base(window)
         {
-            this.ExitWindowCommand = new ExitWindowCommand(this);
-            this.OpenWindowCommand = new OpenWindowCommand(this);
-            this.SendCommand = new SendCommand(this);
-            this.SendImageCommand = new SendImageCommand(this);
-            this.Connection = connection;
-            this.User = user;
-            this.ThisMsg = "";
-            this.Messages = new ObservableCollection<Packet>();
+            ExitWindowCommand = new ExitWindowCommand(this);
+            OpenWindowCommand = new OpenWindowCommand(this);
+            SendCommand = new SendCommand(this);
+            SendImageCommand = new SendImageCommand(this);
+            Connection = connection;
+            User = user;
+            ThisMsg = "";
+            Messages = new ObservableCollection<Packet>();
             connection.Actions["Message"] = (Action<Packet>) DisplayMessage;
             connection.Actions["Image"] = (Action<Packet>) DisplayPicture;
             connection.startReciving();
@@ -68,7 +67,7 @@ namespace WpfApp2.Viewmodels
         public override void ExitWindow()
         {
             List<Packet> lst = Messages.ToList();
-            history.AppendToFile(lst);
+            history.AppendToFile(lst, User.Username);
 
             base.ExitWindow();
         }

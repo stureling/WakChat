@@ -29,29 +29,32 @@ namespace WpfApp2.Models
             //List<Conversation> Histories;
             try
             {
+                List<Conversation> lst = new List<Conversation>();
                 using (StreamReader r = new StreamReader(path))
                 {
                     string json = r.ReadToEnd();
-                    Histories = JsonSerializer.Deserialize<List<Conversation>>(json);
-                    Debug.WriteLine(Histories);
+                    Debug.WriteLine("json = " + json);
+                    lst = JsonSerializer.Deserialize<List<Conversation>>(json);
+                    Debug.WriteLine(lst);
                 }
 
-                foreach (var item in Histories)
+                foreach (var item in lst)
                 {
                     Debug.WriteLine(item);
                 }
-            return Histories;
+            return lst;
             }
-            catch
+            catch(Exception e)
             {
-                Debug.WriteLine("You Yee'd your last Haw, son");
+                Debug.WriteLine($"You Yee'd your last Haw, son. Cause: {e}");
             }
             return new List<Conversation>();
         }
 
-        public void AppendToFile(List<Packet> messages)
+        public void AppendToFile(List<Packet> messages, String username)
         {
-            Histories.Add(new Conversation(messages));
+            Histories.Add(new Conversation(messages, username));
+            Histories.Add(new Conversation(messages, username));
             File.WriteAllText(path, JsonSerializer.Serialize(Histories));
             Debug.WriteLine(path);
             Debug.WriteLine(JsonSerializer.Serialize(Histories));
