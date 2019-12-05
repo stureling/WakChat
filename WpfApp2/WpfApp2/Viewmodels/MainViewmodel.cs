@@ -36,11 +36,10 @@ namespace WpfApp2.Viewmodels
             foreach(var item in _history.Histories)
             {
                 Conversations.Add(item);
-                Debug.WriteLine(item);
             }
         }
 
-        public void OpenHistory(Conversation convo)
+        public void OpenHistory(List<Packet> convo)
         {
             HistoryView history = new HistoryView(new HistoryViewmodel(convo));
             history.Show();

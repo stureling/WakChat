@@ -26,7 +26,7 @@ namespace WpfApp2.Viewmodels.Commands
 
         public void Execute(object parameter)
         {
-            Conversation convo = (Conversation)parameter;
+            List<Packet> convo = (List<Packet>)parameter;
             ViewModel.OpenHistory(convo);
         }
     }

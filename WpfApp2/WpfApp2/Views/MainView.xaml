@@ -24,7 +24,9 @@
                 <ItemsControl ItemsSource="{Binding Path=Conversations}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Content="{Binding ID}" Command="{Binding OpenHistoryCommand}" CommandParameter="{Binding Packet}"/>
+                            <Button Content="{Binding ID}" Command="{Binding DataContext.OpenHistoryCommand,
+                                RelativeSource={RelativeSource Mode=FindAncestor,
+                                                               AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Packet}"/>
 
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
