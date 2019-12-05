@@ -30,7 +30,7 @@ namespace WpfApp2.Viewmodels.Commands
 
         public void Execute(object parameter)
         {
-            this.ViewModel.SendPicture();
+            this.ViewModel.SendImage();
         }
     }
 }

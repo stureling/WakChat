@@ -41,6 +41,7 @@
                                            Grid.Column="1" Grid.Row="0" Width="480"/>
                                 <TextBlock Text="{Binding ConnectionTypeValue}" Style="{StaticResource Darkmodemessage}"
                                            Grid.ColumnSpan="2" Grid.Row="1" Width="480" HorizontalAlignment="Right"/>
+                                <Image Source="{Binding ConnectionTypeValue}" IsEnabled="{Binding ConnectionType}" Grid.Row="1" Grid.ColumnSpan="2" MaxWidth="480" HorizontalAlignment="Right"/>
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
