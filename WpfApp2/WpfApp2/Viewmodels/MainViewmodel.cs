@@ -78,17 +78,15 @@ namespace WpfApp2.Viewmodels
             }
             else
             {
-                Debug.WriteLine(ConversationList.Count());
                 queryConversations = from conv in ConversationList
                                      select conv;
             }
-            Debug.WriteLine(queryConversations.Count());
             Conversations = new ObservableCollection<Conversation>(queryConversations);
         }
 
         public void OpenHistory(List<Packet> convo)
         {
-            HistoryView history = new HistoryView(new HistoryViewmodel(convo));
+            HistoryView history = new HistoryView(convo);
             history.Show();
         }
         public void OnPropertyChanged(string propertyName)
@@ -97,3 +95,4 @@ namespace WpfApp2.Viewmodels
         }
     }
 }
+

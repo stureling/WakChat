@@ -18,20 +18,20 @@
             <Button Content="New connection" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Command="{Binding OpenWindowCommand}" Style="{StaticResource Darkmodebtn}"/>
             <TextBlock HorizontalAlignment="Center" Style="{StaticResource Darkmodetitle}" Margin="0,-100,0,0" Text="Welcome to PLACEHOLDER" VerticalAlignment="Center"/>
         </StackPanel>
-        <StackPanel Margin="10,50,0,0" HorizontalAlignment="Left" Height="340" Width="400"  VerticalAlignment="Top"
+        <StackPanel Margin="10,10,0,0" HorizontalAlignment="Left" Height="340" Width="400"  VerticalAlignment="Top"
                     Grid.Row="0" Grid.Column="0">
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="15, 10" TextWrapping="Wrap" Text="{Binding Path=Filter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="350" Style="{StaticResource Darkmodetxt}"/>
             <ScrollViewer Height="340">
                 <ItemsControl ItemsSource="{Binding Path=Conversations, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Content="{Binding ID}" Command="{Binding DataContext.OpenHistoryCommand,
-                                RelativeSource={RelativeSource Mode=FindAncestor,
-                                                               AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Packet}"/>
+                            <Button Content="{Binding ID}" Width="350"  Style="{StaticResource Darkmodebtn}" Command="{Binding DataContext.OpenHistoryCommand,
+                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Packet}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
         </StackPanel>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="{Binding Path=Filter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" Width="380" />
+  
     </Grid>
 </Window>

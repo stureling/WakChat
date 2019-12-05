@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfApp2.Models;
 using WpfApp2.Viewmodels;
 
 namespace WpfApp2.Views
@@ -20,10 +21,10 @@ namespace WpfApp2.Views
     /// </summary>
     public partial class HistoryView : Window
     {
-        public HistoryView(HistoryViewmodel viewModel)
+        public HistoryView(List<Packet> convo)
         {
             InitializeComponent();
-            this.DataContext = viewModel;
+            this.DataContext = new HistoryViewmodel(convo, this);
         }
     }
 }
