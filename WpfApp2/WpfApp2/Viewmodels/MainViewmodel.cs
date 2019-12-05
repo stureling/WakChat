@@ -16,7 +16,20 @@ namespace WpfApp2.Viewmodels
     class MainViewmodel : BaseViewmodel, INotifyPropertyChanged
     {
         public ObservableCollection<Conversation> Conversations { get; set; }
-
+        private List<Conversation> ConversationList { get; set; }
+        private string _filter;
+        public string Filter
+        {
+            get
+            {
+                return _filter;
+            }
+            set
+            {
+                _filter = value;
+                FilterCollection();
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         public History _history;
@@ -27,14 +40,22 @@ namespace WpfApp2.Viewmodels
         public MainViewmodel(): base()
         {
             ExitWindowCommand = new ExitWindowCommand(this);
-            OpenWindowCommand = new OpenWindowCommand(this);
+            OpenWindowCommand = new NewConnectionCommand(this);
             Conversations = new ObservableCollection<Conversation>();
+            ConversationList = new List<Conversation>();
             _history = new History();
             foreach(var item in _history.Histories)
             {
-                Conversations.Add(item);
+                ConversationList.Add(item);
                 Debug.WriteLine(item);
             }
+        }
+        private void FilterCollection()
+        {
+            var queryConversations = from conv in ConversationList
+                                       where conv.ID.Contains(Filter)
+                                       select conv;
+            Conversations = new ObservableCollection<Conversation>(queryConversations);
         }
         public void OnPropertyChanged(string propertyName)
         {

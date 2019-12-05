@@ -52,7 +52,7 @@ namespace WpfApp2.Viewmodels
         public ChatViewmodel(Connection connection, User user, Window window): base(window)
         {
             ExitWindowCommand = new ExitWindowCommand(this);
-            OpenWindowCommand = new OpenWindowCommand(this);
+            OpenWindowCommand = new NewConnectionCommand(this);
             SendCommand = new SendCommand(this);
             SendImageCommand = new SendImageCommand(this);
             Connection = connection;
@@ -60,7 +60,7 @@ namespace WpfApp2.Viewmodels
             ThisMsg = "";
             Messages = new ObservableCollection<Packet>();
             connection.Actions["Message"] = (Action<Packet>) DisplayMessage;
-            connection.Actions["Image"] = (Action<Packet>) DisplayPicture;
+            connection.Actions["Image"] = (Action<Packet>) DisplayImage;
             connection.Actions["Buzz"] = (Action<Packet>) Buzz;
             connection.startReciving();
         }
@@ -100,55 +100,23 @@ namespace WpfApp2.Viewmodels
         }
         public void SendImage()
         {
-
-            string imagestring = OpenImage();
+            string path = ImageHelper.SelectImage();
+            Image img = Image.FromFile(path);
+            string imagestring = ImageHelper.EncodeImage(img);
             Packet packet = new Packet() {Username = User.Username, Time = DateTime.Now, ConnectionType = "Image", ConnectionTypeValue = imagestring};
             Connection.Send(packet);
-        }
-        public string OpenImage()
-        { 
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-            ofd.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
-            Image img = null;
-            if (ofd.ShowDialog() == true)
-            {
-                img = Image.FromFile(ofd.FileName);
-            }
-            Messages.Add(new Packet() { Username = User.Username, Time = DateTime.Now, ConnectionType = "Image", ConnectionTypeValue = ofd.FileName});
-
-            Byte[] imageByte = null;
-            using (var ms = new MemoryStream())
-            {
-                img.Save(ms, img.RawFormat);
-                imageByte = ms.ToArray();
-            }
-            string imagestring = Convert.ToBase64String(imageByte);
-            return imagestring;
+            packet.ConnectionTypeValue = path;
+            Messages.Add(packet);
         }
         public void DisplayMessage(Packet packet)
         {
             Messages.Add(packet);
         }
-        public void DisplayPicture(Packet packet)
+        public void DisplayImage(Packet packet)
         {
-            string filePath = SaveImage(packet);
+            string filePath = ImageHelper.SaveImage(packet);
             packet.ConnectionTypeValue = filePath;
-            Messages.Add(packet);
-        }
-        public string SaveImage(Packet packet)
-        {
-            Byte[] rawImage = new Byte[133769420];
-            rawImage = Convert.FromBase64String(packet.ConnectionTypeValue);
-            Image image = null;
-            using (var ms = new MemoryStream(rawImage))
-            {
-                image = Image.FromStream(ms);
-            }
-            string path = AppDomain.CurrentDomain.BaseDirectory + @"image\"+ "test" + packet.Username + packet.Time.Millisecond.ToString() + ".png";
-            Debug.WriteLine(path);
-            image.Save(path, ImageFormat.Png);
-            return path;
+            DisplayMessage(packet);
         }
     }
 }

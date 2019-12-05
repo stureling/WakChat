@@ -18,7 +18,7 @@
             <Button Content="New connection" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Command="{Binding OpenWindowCommand}" Style="{StaticResource Darkmodebtn}"/>
             <TextBlock HorizontalAlignment="Center" Style="{StaticResource Darkmodetitle}" Margin="0,-100,0,0" Text="Welcome to PLACEHOLDER" VerticalAlignment="Center"/>
         </StackPanel>
-        <StackPanel Margin="10,10,0,0" HorizontalAlignment="Left" Height="340" Width="400"  VerticalAlignment="Top"
+        <StackPanel Margin="10,50,0,0" HorizontalAlignment="Left" Height="340" Width="400"  VerticalAlignment="Top"
                     Grid.Row="0" Grid.Column="0">
             <ScrollViewer Height="340">
                 <ItemsControl ItemsSource="{Binding Path=Conversations}">
@@ -31,5 +31,6 @@
                 </ItemsControl>
             </ScrollViewer>
         </StackPanel>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="{Binding Filter}" VerticalAlignment="Top" Width="380" />
     </Grid>
 </Window>
