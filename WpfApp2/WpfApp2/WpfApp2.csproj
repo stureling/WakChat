@@ -145,6 +145,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\HistoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -173,13 +177,18 @@
     <Compile Include="Models\Connection.cs" />
     <Compile Include="Viewmodels\BaseViewmodel.cs" />
     <Compile Include="Viewmodels\ChatViewmodel.cs" />
+    <Compile Include="Viewmodels\Commands\OpenHistoryCommand.cs" />
     <Compile Include="Viewmodels\Commands\OpenWindowCommand.cs" />
     <Compile Include="Viewmodels\Commands\ExitWindowCommand.cs" />
     <Compile Include="Models\Packet.cs" />
     <Compile Include="Viewmodels\Commands\SendImageCommand.cs" />
     <Compile Include="Viewmodels\Commands\SendCommand.cs" />
+    <Compile Include="Viewmodels\HistoryViewmodel.cs" />
     <Compile Include="Viewmodels\LoginViewmodel.cs" />
     <Compile Include="Viewmodels\MainViewmodel.cs" />
+    <Compile Include="Views\HistoryView.xaml.cs">
+      <DependentUpon>HistoryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>

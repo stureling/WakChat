@@ -16,8 +16,8 @@ namespace WpfApp2.Viewmodels.Commands
 
         public OpenWindowCommand(BaseViewmodel viewModel)
         {
-            this.ViewModel = viewModel;
-            this.LoginModel = LoginModel;
+            ViewModel = viewModel;
+            LoginModel = LoginModel;
         }
 
         public event EventHandler CanExecuteChanged;
@@ -31,7 +31,7 @@ namespace WpfApp2.Viewmodels.Commands
 
         public void Execute(object parameter)
         {
-            this.ViewModel.EnterClick();
+            ViewModel.EnterClick();
         }
     }
 }

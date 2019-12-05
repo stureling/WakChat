@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Input;
 using WpfApp2.Models;
 using WpfApp2.Viewmodels.Commands;
+using WpfApp2.Views;
 
 namespace WpfApp2.Viewmodels
 {
@@ -23,11 +24,13 @@ namespace WpfApp2.Viewmodels
 
         public ICommand ExitWindowCommand { get; set; }
         public ICommand OpenWindowCommand { get; set; }
+        public ICommand OpenHistoryCommand { get; set; }
 
         public MainViewmodel(): base()
         {
             ExitWindowCommand = new ExitWindowCommand(this);
             OpenWindowCommand = new OpenWindowCommand(this);
+            OpenHistoryCommand = new OpenHistoryCommand(this);
             Conversations = new ObservableCollection<Conversation>();
             _history = new History();
             foreach(var item in _history.Histories)
@@ -35,6 +38,12 @@ namespace WpfApp2.Viewmodels
                 Conversations.Add(item);
                 Debug.WriteLine(item);
             }
+        }
+
+        public void OpenHistory(Conversation convo)
+        {
+            HistoryView history = new HistoryView(new HistoryViewmodel(convo));
+            history.Show();
         }
         public void OnPropertyChanged(string propertyName)
         {

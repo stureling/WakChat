@@ -24,7 +24,7 @@
                 <ItemsControl ItemsSource="{Binding Path=Conversations}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Content="{Binding ID}"/>
+                            <Button Content="{Binding ID}" Command="{Binding OpenHistoryCommand}" CommandParameter="{Binding Packet}"/>
 
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
