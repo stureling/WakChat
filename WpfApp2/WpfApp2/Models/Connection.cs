@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -15,7 +15,7 @@ using WpfApp2.Models;
 
 namespace WpfApp2.Viewmodels
 {
-    public class Connection
+    public class Connection: INotifyPropertyChanged
     {
         public Connection()
         {
@@ -31,16 +31,28 @@ namespace WpfApp2.Viewmodels
         public Hashtable Actions { get; set; }
         public TcpClient Client { get; set; }
         public TcpListener Server { get; set; }
-        public bool Listening { get; set; }
+        private bool _listening;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public bool Listening { 
+            get
+            {
+                return _listening;
+            }
+            set
+            {
+                _listening = value;
+                OnPropertyChanged("Listening");
+            }
+        }
 
         public void Connect(User user)
         {
             User = user;
             if(connectionThread != null)
             {
-                Debug.WriteLine("Thread aborted to make room for new thread");
                 connectionThread.Abort();
-                Debug.WriteLine("Thread aborted");
             }
             connectionThread = new Thread(() => ConnectThread());
             connectionThread.Start();
@@ -51,9 +63,7 @@ namespace WpfApp2.Viewmodels
             User = user;
             if(connectionThread != null)
             {
-                Debug.WriteLine("Starting thread abortion to make room for new thread");
                 connectionThread.Abort();
-                Debug.WriteLine("Thread aborted");
             }
             connectionThread = new Thread(() => ListenThread());
             connectionThread.Start();
@@ -98,7 +108,6 @@ namespace WpfApp2.Viewmodels
                 Server = new TcpListener(localAddr, User.Port);
                 Server.Start();
                 String data;
-                Debug.Write("Waiting for a connection... ");
                 Listening = true;
 
                 while (Listening)
@@ -150,7 +159,6 @@ namespace WpfApp2.Viewmodels
                 {
                     if (stream.DataAvailable)
                     {
-                        Debug.WriteLine("Message pending!");
                         data = Recieve();
                         Packet converted_data = JsonSerializer.Deserialize<Packet>(data);
                         HandlePacket(converted_data);
@@ -173,7 +181,6 @@ namespace WpfApp2.Viewmodels
         }
         public void HandlePacket(Packet packet)
         {
-            Debug.WriteLine($"Handling packet: {JsonSerializer.Serialize(packet)}");
             if (Actions.Contains(packet.ConnectionType))
             {
                 Action<Packet> action = (Action<Packet>) Actions[packet.ConnectionType];
@@ -224,6 +231,11 @@ namespace WpfApp2.Viewmodels
                 Send(json);
                 Client.Close();
             }
+        }
+        public void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }    
 }

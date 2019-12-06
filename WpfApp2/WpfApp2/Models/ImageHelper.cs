@@ -45,7 +45,6 @@ namespace WpfApp2.Models
                 image = Image.FromStream(ms);
             }
             string path = AppDomain.CurrentDomain.BaseDirectory + @"image\"+ packet.Username + packet.Time.Millisecond.ToString() + ".png";
-            Debug.WriteLine(path);
             image.Save(path, ImageFormat.Png);
             return path;
         }

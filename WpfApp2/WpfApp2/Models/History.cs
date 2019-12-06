@@ -33,20 +33,13 @@ namespace WpfApp2.Models
                 using (StreamReader r = new StreamReader(path))
                 {
                     string json = r.ReadToEnd();
-                    Debug.WriteLine("json = " + json);
                     lst = JsonSerializer.Deserialize<List<Conversation>>(json);
-                    Debug.WriteLine(lst);
-                }
-
-                foreach (var item in lst)
-                {
-                    Debug.WriteLine(item);
                 }
             return lst;
             }
             catch(Exception e)
             {
-                Debug.WriteLine($"You Yee'd your last Haw, son. Cause: {e}");
+                Debug.WriteLine(e);
             }
             return new List<Conversation>();
         }
@@ -55,7 +48,6 @@ namespace WpfApp2.Models
         {
             Histories.Add(new Conversation(messages, username));
             File.WriteAllText(path, JsonSerializer.Serialize(Histories));
-            Debug.WriteLine(JsonSerializer.Serialize(Histories));
         }
 
         public void OnPropertyChanged(string propertyName)
