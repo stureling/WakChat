@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -47,6 +48,21 @@ namespace WpfApp2.Viewmodels
         public ICommand OpenWindowCommand { get; set; }
         public ICommand SendCommand { get; set; }
         public ICommand SendImageCommand { get; set; }
+
+        private IMessenger _messengerInstance;
+
+        protected IMessenger MessengerInstance
+        {
+            get
+            {
+                return _messengerInstance ?? Messenger.Default;
+            }
+            set
+            {
+                _messengerInstance = value;
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ChatViewmodel(Connection connection, User user, Window window): base(window)
@@ -70,6 +86,7 @@ namespace WpfApp2.Viewmodels
             List<Packet> lst = Messages.ToList();
             history.AppendToFile(lst, User.Username);
             Connection.Abort();
+            MessengerInstance.Send<NotificationMessage>(new NotificationMessage("notification message"));
             base.ExitWindow();
         }
 

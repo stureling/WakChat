@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -31,6 +32,7 @@ namespace WpfApp2.Viewmodels
         }
         private List<Conversation> ConversationList { get; set; }
         private string _filter;
+        private IMessenger _messengerInstance;
         public string Filter
         {
             get
@@ -44,6 +46,18 @@ namespace WpfApp2.Viewmodels
                 FilterCollection();
             }
         }
+        protected IMessenger MessengerInstance
+        {
+            get
+            {
+                return _messengerInstance ?? Messenger.Default;
+            }
+            set
+            {
+                _messengerInstance = value;
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public History _history;
@@ -54,6 +68,7 @@ namespace WpfApp2.Viewmodels
 
         public MainViewmodel(): base()
         {
+            MessengerInstance.Register<NotificationMessage>(this, NotifyMe);
             ExitWindowCommand = new ExitWindowCommand(this);
             OpenWindowCommand = new NewConnectionCommand(this);
             OpenWindowCommand = new OpenWindowCommand(this);
@@ -92,6 +107,18 @@ namespace WpfApp2.Viewmodels
         public void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void NotifyMe(NotificationMessage notificationMessage)
+        {
+            string notification = notificationMessage.Notification;
+            ConversationList.Clear();
+            _history = new History();
+            foreach (var item in _history.Histories)
+            {
+                ConversationList.Add(item);
+            }
+            FilterCollection();
         }
     }
 }
