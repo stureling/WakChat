@@ -75,9 +75,9 @@ namespace WpfApp2.Viewmodels
             User = user;
             ThisMsg = "";
             Messages = new ObservableCollection<Packet>();
-            connection.Actions["Message"] = (Action<Packet>) DisplayMessage;
-            connection.Actions["Image"] = (Action<Packet>) DisplayImage;
-            connection.Actions["Buzz"] = (Action<Packet>) Buzz;
+            connection.Actions["Message"] = (Action<MessagePacket>) DisplayMessage;
+            connection.Actions["Image"] = (Action<ImagePacket>) DisplayImage;
+            connection.Actions["Buzz"] = (Action<BuzzPacket>) Buzz;
             connection.startReciving();
         }
 
@@ -100,39 +100,39 @@ namespace WpfApp2.Viewmodels
             Packet mess;
             if(ThisMsg.ToLower() == "buzz")
             {
-                mess = new Packet() { ConnectionType = "Buzz", ConnectionTypeValue = ThisMsg, Username = User.Username, Time = DateTime.Now };
+                mess = new BuzzPacket(User.Username);
             }
             else
             {
-                mess = new Packet() { ConnectionType = "Message", ConnectionTypeValue = ThisMsg, Username = User.Username, Time = DateTime.Now };
+                mess = new MessagePacket(ThisMsg, User.Username);
             }
             Connection.Send(mess);
             Messages.Add(mess);
             ThisMsg = "";
         }
-        public void Buzz(Packet packet = null)
+        public void Buzz(Packet packet)
         {
             System.Media.SoundPlayer player = new System.Media.SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + @"buzz\buzz.wav");
             player.Play();
+            Messages.Add(packet);
         }
         public void SendImage()
         {
             string path = ImageHelper.SelectImage();
             Image img = Image.FromFile(path);
-            string imagestring = ImageHelper.EncodeImage(img);
-            Packet packet = new Packet() {Username = User.Username, Time = DateTime.Now, ConnectionType = "Image", ConnectionTypeValue = imagestring};
+            ImagePacket packet = new ImagePacket(img, User.Username);
             Connection.Send(packet);
-            packet.ConnectionTypeValue = path;
+            packet.StrImage = path;
             Messages.Add(packet);
         }
         public void DisplayMessage(Packet packet)
         {
             Messages.Add(packet);
         }
-        public void DisplayImage(Packet packet)
+        public void DisplayImage(ImagePacket packet)
         {
             string filePath = ImageHelper.SaveImage(packet);
-            packet.ConnectionTypeValue = filePath;
+            packet.StrImage = filePath;
             DisplayMessage(packet);
         }
     }

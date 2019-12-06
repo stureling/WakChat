@@ -35,10 +35,10 @@ namespace WpfApp2.Models
             }
             return Convert.ToBase64String(imageByte);
         }
-        static public string SaveImage(Packet packet)
+        static public string SaveImage(ImagePacket packet)
         {
             Byte[] rawImage = new Byte[133769420];
-            rawImage = Convert.FromBase64String(packet.ConnectionTypeValue);
+            rawImage = Convert.FromBase64String(packet.StrImage);
             Image image = null;
             using (var ms = new MemoryStream(rawImage))
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -76,12 +77,12 @@ namespace WpfApp2.Viewmodels
                 IPAddress serverIP = IPAddress.Parse(User.IP);
                 Client.Connect(serverIP, User.Port);
 
-                Packet json = new Packet() { ConnectionTypeValue = "", ConnectionType ="ConnectionRequest", Username = User.Username, Time = DateTime.Now };
-                Send(json);
+                ConnectionPacket request = new ConnectionPacket("ConnectionRequest", User.Username);
+                Send(request);
 
                 String responseData = String.Empty;
                 responseData = Recieve();
-                Packet response= JsonSerializer.Deserialize<Packet>(responseData);
+                var response = Newtonsoft.Json.JsonConvert.DeserializeObject<ConnectionPacket>(responseData, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto });
                 HandlePacket(response);
                 Console.WriteLine($"Received: {responseData}");
             }
@@ -117,7 +118,7 @@ namespace WpfApp2.Viewmodels
                         Client = Server.AcceptTcpClient();
                         data = null;
                         data = Recieve();
-                        Packet packet = JsonSerializer.Deserialize<Packet>(data);
+                        var packet = Newtonsoft.Json.JsonConvert.DeserializeObject<ConnectionPacket>(data, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto });
                         HandlePacket(packet);
                     }
                 }
@@ -133,7 +134,7 @@ namespace WpfApp2.Viewmodels
         }
         public void Send(Packet message)
         {
-            string jsonString = JsonSerializer.Serialize(message);
+            string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(message);
             byte[] msg = Encoding.UTF8.GetBytes(jsonString);
             Client.GetStream().Write(msg, 0, msg.Length);
         }
@@ -160,8 +161,8 @@ namespace WpfApp2.Viewmodels
                     if (stream.DataAvailable)
                     {
                         data = Recieve();
-                        Packet converted_data = JsonSerializer.Deserialize<Packet>(data);
-                        HandlePacket(converted_data);
+                        Packet packet = Newtonsoft.Json.JsonConvert.DeserializeObject<Packet>(data, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto });
+                        HandlePacket(packet);
                     }
                 }
                 MessageBox.Show("User disconnected", "Alert", MessageBoxButton.OK);
@@ -195,8 +196,8 @@ namespace WpfApp2.Viewmodels
         {
             if (Client.Connected)
             {
-                Packet p = new Packet() { ConnectionType = "Disconnect", ConnectionTypeValue = "Disconnect", Time = DateTime.Now, Username = User.Username };
-                Send(p);
+                ConnectionPacket disconnecter = new ConnectionPacket("Disconnect", User.Username);
+                Send(disconnecter);
                 Client.Close();
             }
             if (connectionThread != null)
@@ -219,16 +220,16 @@ namespace WpfApp2.Viewmodels
             MessageBoxResult result = MessageBox.Show($"User {packet.Username} wishes to connect, Accept?", "Alert", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
-                Packet json = new Packet() { ConnectionTypeValue = "", ConnectionType ="ConnectionAccept", Username = User.Username, Time = DateTime.Now };
-                Send(json);
+                ConnectionPacket response = new ConnectionPacket("ConnectionAccept", User.Username);
+                Send(response);
                 Listening = false;
                 Action<Packet> action = (Action<Packet>)Actions["ConnectionAccept"];
                 Application.Current.Dispatcher.Invoke(() => { action(packet); });
             }
             else if (result == MessageBoxResult.No)
             {
-                Packet json = new Packet() { ConnectionTypeValue = "", ConnectionType ="ConnectionDeny", Username = User.Username, Time = DateTime.Now };
-                Send(json);
+                ConnectionPacket response = new ConnectionPacket("ConnectionDeny", User.Username);
+                Send(response);
                 Client.Close();
             }
         }
