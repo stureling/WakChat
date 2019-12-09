@@ -55,4 +55,11 @@ namespace WpfApp2.Models
         }
         public string Message { get; set; }
     }
+    public class NullPacket : Packet
+    {
+        public NullPacket() : base("null")
+        {
+            ConnectionType = "Null";
+        }
+    }
 }

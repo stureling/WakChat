@@ -26,6 +26,7 @@ namespace WpfApp2.Viewmodels
             Actions["ConnectionRequest"] = (Action<Packet>) QueryUserOnConnect;
             Actions["ConnectionDeny"] = (Action<Packet>) ConnectionDeny;
             Actions["Disconnect"] = (Action<Packet>) Disconnect;
+            Actions["Null"] = (Action)(() => { });
         }
         private Thread connectionThread;
         private  User User { get; set; }
@@ -80,11 +81,8 @@ namespace WpfApp2.Viewmodels
                 ConnectionPacket request = new ConnectionPacket("ConnectionRequest", User.Username);
                 Send(request);
 
-                String responseData = String.Empty;
-                responseData = Recieve();
-                var response = Newtonsoft.Json.JsonConvert.DeserializeObject<ConnectionPacket>(responseData, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto });
+                Packet response = Recieve();
                 HandlePacket(response);
-                Console.WriteLine($"Received: {responseData}");
             }
             catch (ArgumentNullException e)
             {
@@ -108,7 +106,7 @@ namespace WpfApp2.Viewmodels
                 IPAddress localAddr = IPAddress.Parse("127.0.0.1");
                 Server = new TcpListener(localAddr, User.Port);
                 Server.Start();
-                String data;
+                Packet packet;
                 Listening = true;
 
                 while (Listening)
@@ -116,9 +114,7 @@ namespace WpfApp2.Viewmodels
                     if (Server.Pending())
                     {
                         Client = Server.AcceptTcpClient();
-                        data = null;
-                        data = Recieve();
-                        var packet = Newtonsoft.Json.JsonConvert.DeserializeObject<ConnectionPacket>(data, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto });
+                        packet = Recieve();
                         HandlePacket(packet);
                     }
                 }
@@ -134,16 +130,29 @@ namespace WpfApp2.Viewmodels
         }
         public void Send(Packet message)
         {
-            string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(message);
+            string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(message, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
             byte[] msg = Encoding.UTF8.GetBytes(jsonString);
             Client.GetStream().Write(msg, 0, msg.Length);
         }
-        public string Recieve()
+        public Packet Recieve()
         {
             int i;
             Byte[] bytes = new Byte[133769420];
             i = Client.GetStream().Read(bytes, 0, bytes.Length);
-            return Encoding.UTF8.GetString(bytes, 0, i);
+            string pktstring = Encoding.UTF8.GetString(bytes, 0, i);
+            Debug.WriteLine($"Recieved: {pktstring}");
+            Packet packet;
+            try
+            {
+                packet = JsonConvert.DeserializeObject<Packet>(pktstring, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
+                return packet;
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return new NullPacket();
+            }
         }
         public void startReciving()
         {
@@ -155,13 +164,12 @@ namespace WpfApp2.Viewmodels
             try
             {
                 NetworkStream stream = Client.GetStream(); 
-                string data;
+                Packet packet;
                 while (Client.Connected)
                 {
                     if (stream.DataAvailable)
                     {
-                        data = Recieve();
-                        Packet packet = Newtonsoft.Json.JsonConvert.DeserializeObject<Packet>(data, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto });
+                        packet = Recieve();
                         HandlePacket(packet);
                     }
                 }
@@ -182,14 +190,21 @@ namespace WpfApp2.Viewmodels
         }
         public void HandlePacket(Packet packet)
         {
-            if (Actions.Contains(packet.ConnectionType))
+            try
             {
-                Action<Packet> action = (Action<Packet>) Actions[packet.ConnectionType];
-                Application.Current.Dispatcher.Invoke(() => { action(packet); });
+                if (Actions.Contains(packet.ConnectionType))
+                {
+                    Action<Packet> action = (Action<Packet>)Actions[packet.ConnectionType];
+                    Application.Current.Dispatcher.Invoke(() => { action(packet); });
+                }
+                else
+                {
+                    throw new ActionUnspecifiedException();
+                }
             }
-            else
+            catch (ActionUnspecifiedException e) 
             {
-                Debug.WriteLine("No function specified for the packettype");
+                Debug.WriteLine(e);
             }
         }
         public void Abort()
@@ -239,4 +254,12 @@ namespace WpfApp2.Viewmodels
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }    
+    class UnknownPacketException : Exception
+    {
+
+    }
+    class ActionUnspecifiedException : Exception
+    {
+            public ActionUnspecifiedException() : base(string.Format("Incoming packet had no corresponding action set in Actions hashtable.")) { }
+    }
 }
