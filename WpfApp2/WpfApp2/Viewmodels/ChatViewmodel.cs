@@ -77,7 +77,7 @@ namespace WpfApp2.Viewmodels
             Messages = new ObservableCollection<Packet>();
             connection.Actions["Message"] = (Action<MessagePacket>) DisplayMessage;
             connection.Actions["Image"] = (Action<ImagePacket>) DisplayImage;
-            connection.Actions["Buzz"] = (Action<BuzzPacket>) Buzz;
+            connection.Actions["Buzz"] = (Action<BuzzPacket>) RecieveBuzz;
             connection.startReciving();
         }
 
@@ -97,23 +97,21 @@ namespace WpfApp2.Viewmodels
         }
         public void SendMessage()
         {
-            Packet mess;
-            if(ThisMsg.ToLower() == "buzz")
-            {
-                mess = new BuzzPacket(User.Username);
-            }
-            else
-            {
-                mess = new MessagePacket(ThisMsg, User.Username);
-            }
+            Packet mess = new MessagePacket(ThisMsg, User.Username);
             Connection.Send(mess);
             Messages.Add(mess);
             ThisMsg = "";
         }
-        public void Buzz(Packet packet)
+        public void RecieveBuzz(Packet packet)
         {
             System.Media.SoundPlayer player = new System.Media.SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + @"buzz\buzz.wav");
             player.Play();
+            Messages.Add(packet);
+        }
+        public void SendBuzz()
+        {
+            Packet packet = new BuzzPacket(User.Username);
+            Connection.Send(packet);
             Messages.Add(packet);
         }
         public void SendImage()

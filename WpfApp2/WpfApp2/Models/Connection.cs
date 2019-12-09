@@ -26,7 +26,7 @@ namespace WpfApp2.Viewmodels
             Actions["ConnectionRequest"] = (Action<Packet>) QueryUserOnConnect;
             Actions["ConnectionDeny"] = (Action<Packet>) ConnectionDeny;
             Actions["Disconnect"] = (Action<Packet>) Disconnect;
-            Actions["Null"] = (Action)(() => { });
+            Actions["Null"] = (Action<Packet>)((Packet p) => { });
         }
         private Thread connectionThread;
         private  User User { get; set; }
@@ -130,7 +130,7 @@ namespace WpfApp2.Viewmodels
         }
         public void Send(Packet message)
         {
-            string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(message, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
+            string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(message, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
             byte[] msg = Encoding.UTF8.GetBytes(jsonString);
             Client.GetStream().Write(msg, 0, msg.Length);
         }
@@ -144,7 +144,7 @@ namespace WpfApp2.Viewmodels
             Packet packet;
             try
             {
-                packet = JsonConvert.DeserializeObject<Packet>(pktstring, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
+                packet = JsonConvert.DeserializeObject<Packet>(pktstring, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
                 return packet;
 
             }

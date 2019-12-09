@@ -44,8 +44,8 @@ namespace WpfApp2.Models
             {
                 image = Image.FromStream(ms);
             }
-            string path = AppDomain.CurrentDomain.BaseDirectory + @"image\"+ packet.Username + packet.Time.Millisecond.ToString() + ".png";
-            image.Save(path, ImageFormat.Png);
+            string path = AppDomain.CurrentDomain.BaseDirectory + @"image\"+ packet.Username + packet.Time.Millisecond.ToString() + "." + packet.format.ToString();
+            image.Save(path, packet.format);
             return path;
         }
     }

@@ -198,6 +198,7 @@
     <Compile Include="Viewmodels\Commands\OpenWindowCommand.cs" />
     <Compile Include="Viewmodels\Commands\ExitWindowCommand.cs" />
     <Compile Include="Models\Packet.cs" />
+    <Compile Include="Viewmodels\Commands\SendBuzzCommand.cs" />
     <Compile Include="Viewmodels\Commands\SendImageCommand.cs" />
     <Compile Include="Viewmodels\Commands\SendCommand.cs" />
     <Compile Include="Viewmodels\HistoryViewmodel.cs" />
