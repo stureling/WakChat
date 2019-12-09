@@ -50,7 +50,7 @@ namespace WpfApp2.Models
         public void AppendToFile(List<Packet> messages, String username)
         {
             Histories.Add(new Conversation(messages, username));
-            File.WriteAllText(path, System.Text.Json.JsonSerializer.Serialize(Histories));
+            File.WriteAllText(path, System.Text.Json.JsonSerializer.Serialize(Histories, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All }));
         }
 
         public void OnPropertyChanged(string propertyName)
