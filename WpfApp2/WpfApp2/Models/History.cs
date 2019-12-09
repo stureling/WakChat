@@ -1,4 +1,5 @@
 ﻿//using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,7 +34,9 @@ namespace WpfApp2.Models
                 using (StreamReader r = new StreamReader(path))
                 {
                     string json = r.ReadToEnd();
-                    lst = JsonSerializer.Deserialize<List<Conversation>>(json);
+                    lst = JsonConvert.DeserializeObject<List<Conversation>>(json, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
+                    //lst = JsonSerializer.Deserialize<List<Conversation>>(json);
+                    Debug.WriteLine(lst);
                 }
             return lst;
             }
@@ -47,7 +50,7 @@ namespace WpfApp2.Models
         public void AppendToFile(List<Packet> messages, String username)
         {
             Histories.Add(new Conversation(messages, username));
-            File.WriteAllText(path, JsonSerializer.Serialize(Histories));
+            File.WriteAllText(path, System.Text.Json.JsonSerializer.Serialize(Histories));
         }
 
         public void OnPropertyChanged(string propertyName)
