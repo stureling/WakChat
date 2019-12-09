@@ -1,5 +1,4 @@
-﻿//using Newtonsoft.Json;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +7,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace WpfApp2.Models
@@ -50,7 +48,7 @@ namespace WpfApp2.Models
         public void AppendToFile(List<Packet> messages, String username)
         {
             Histories.Add(new Conversation(messages, username));
-            File.WriteAllText(path, System.Text.Json.JsonSerializer.Serialize(Histories, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All }));
+            File.WriteAllText(path, JsonConvert.SerializeObject(Histories, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All }));
         }
 
         public void OnPropertyChanged(string propertyName)
