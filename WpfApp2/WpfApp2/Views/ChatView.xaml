@@ -49,6 +49,25 @@
                 <Image Source="{Binding StrImage}" IsEnabled="{Binding ConnectionType}" Grid.Row="1" Grid.ColumnSpan="2" MaxWidth="480" HorizontalAlignment="Right"/>
             </Grid>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type m:BuzzPacket}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="480"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding Username}" Style="{StaticResource Darkmodeusername}"
+                                           Grid.Column="0" Grid.Row="0" Width="200"/>
+                <TextBlock Text="{Binding Time.TimeOfDay}" Style="{StaticResource Darkmodetime}"
+                                           Grid.Column="1" Grid.Row="0" Width="480"/>
+                <TextBlock Text="Buzz" Style="{StaticResource Darkmodebuzz}" 
+                                           Grid.ColumnSpan="2" Grid.Row="1" Width="480" HorizontalAlignment="Right"/>
+            </Grid>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>
@@ -67,7 +86,7 @@
         <StackPanel Margin="10,10,0,0" HorizontalAlignment="Left" Height="340" Width="680"  VerticalAlignment="Top"
                     Style="{StaticResource Darkmodechatbox}">
             <ScrollViewer Height="340">
-                <ItemsControl ItemsSource="{Binding Coll}"/>
+                <ItemsControl ItemsSource="{Binding Messages}"/>
             </ScrollViewer>
         </StackPanel>
     </Grid>
