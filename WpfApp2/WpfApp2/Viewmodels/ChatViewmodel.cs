@@ -123,6 +123,7 @@ namespace WpfApp2.Viewmodels
             if(path != null)
             {
                 Image img = Image.FromFile(path);
+                //Debug.WriteLine($"Image: {img.ToString()}");
                 ImagePacket packet = new ImagePacket(img, User.Username);
                 Connection.Send(packet);
                 packet.StrImage = path;
