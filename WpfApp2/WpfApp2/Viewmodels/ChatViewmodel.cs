@@ -48,6 +48,7 @@ namespace WpfApp2.Viewmodels
         public ICommand OpenWindowCommand { get; set; }
         public ICommand SendCommand { get; set; }
         public ICommand SendImageCommand { get; set; }
+        public ICommand SendBuzzCommand { get; set; }
 
         private IMessenger _messengerInstance;
 
@@ -71,6 +72,7 @@ namespace WpfApp2.Viewmodels
             OpenWindowCommand = new NewConnectionCommand(this);
             SendCommand = new SendCommand(this);
             SendImageCommand = new SendImageCommand(this);
+            SendBuzzCommand = new SendBuzzCommand(this);
             Connection = connection;
             User = user;
             ThisMsg = "";
@@ -107,7 +109,7 @@ namespace WpfApp2.Viewmodels
             BuzzPacket buzzpkt = (BuzzPacket) packet;
             System.Media.SoundPlayer player = new System.Media.SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + @"buzz\buzz.wav");
             player.Play();
-            Messages.Add(packet);
+            Messages.Add(buzzpkt);
         }
         public void SendBuzz()
         {

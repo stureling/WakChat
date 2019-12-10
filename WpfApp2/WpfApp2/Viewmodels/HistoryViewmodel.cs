@@ -24,7 +24,6 @@ namespace WpfApp2.Viewmodels
             Coll = new ObservableCollection<Packet>();
             foreach(var item in Convo)
             {
-                Debug.WriteLine(item);
                 Coll.Add(item);
             }
             ExitWindowCommand = new ExitWindowCommand(this);

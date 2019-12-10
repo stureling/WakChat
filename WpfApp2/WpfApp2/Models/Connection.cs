@@ -138,7 +138,6 @@ namespace WpfApp2.Viewmodels
             Byte[] bytes = new Byte[133769420];
             i = Client.GetStream().Read(bytes, 0, bytes.Length);
             string pktstring = Encoding.UTF8.GetString(bytes, 0, i);
-            Debug.WriteLine($"Recieved: {pktstring}");
             Packet packet;
             try
             {

@@ -47,6 +47,7 @@ namespace WpfApp2.Models
 
         public void AppendToFile(List<Packet> messages, String username)
         {
+            Histories = ReadFromFile();
             Histories.Add(new Conversation(messages, username));
             File.WriteAllText(path, JsonConvert.SerializeObject(Histories, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All }));
         }

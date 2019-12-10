@@ -35,7 +35,7 @@
             <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="TextAlignment" Value="Center"/>
         </Style>
-        <Style x:Key="Darkmodebuzz" TargetType="TextBox">
+        <Style x:Key="Darkmodebuzz" TargetType="TextBlock">
             <Setter Property="Background" Value="#474052"/>
             <Setter Property="Foreground" Value="Cornsilk"/>
             <Setter Property="FontFamily" Value="SimSun-ExtB"/>
