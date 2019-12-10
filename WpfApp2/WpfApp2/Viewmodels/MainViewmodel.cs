@@ -101,6 +101,12 @@ namespace WpfApp2.Viewmodels
 
         public void OpenHistory(List<Packet> convo)
         {
+            foreach(var item in convo)
+            {
+                Debug.WriteLine(item);
+
+            }
+            
             HistoryView history = new HistoryView(convo);
             history.Show();
         }

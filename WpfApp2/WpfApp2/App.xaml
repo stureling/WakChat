@@ -35,6 +35,18 @@
             <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="TextAlignment" Value="Center"/>
         </Style>
+        <Style x:Key="Darkmodebuzz" TargetType="TextBox">
+            <Setter Property="Background" Value="#474052"/>
+            <Setter Property="Foreground" Value="Cornsilk"/>
+            <Setter Property="FontFamily" Value="SimSun-ExtB"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Cursor" Value="Pen"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
         <Style x:Key="Darkmodetitle" TargetType="TextBlock">
             <Setter Property="Foreground" Value="Cornsilk"/>
             <Setter Property="FontFamily" Value="SimSun-ExtB"/>
