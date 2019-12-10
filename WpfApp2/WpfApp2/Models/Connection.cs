@@ -7,8 +7,6 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -194,8 +192,8 @@ namespace WpfApp2.Viewmodels
             {
                 if (Actions.Contains(packet.ConnectionType))
                 {
-                    Action<Packet> action = (Action<Packet>)Actions[packet.ConnectionType];
-                    Application.Current.Dispatcher.Invoke(() => { action(packet); });
+                    Action<Packet> action = (Action<Packet>) Actions[packet.ConnectionType];
+                    Application.Current.Dispatcher.Invoke(()=> { action(packet); });
                 }
                 else
                 {

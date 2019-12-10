@@ -75,9 +75,9 @@ namespace WpfApp2.Viewmodels
             User = user;
             ThisMsg = "";
             Messages = new ObservableCollection<Packet>();
-            connection.Actions["Message"] = (Action<MessagePacket>) DisplayMessage;
-            connection.Actions["Image"] = (Action<ImagePacket>) DisplayImage;
-            connection.Actions["Buzz"] = (Action<BuzzPacket>) RecieveBuzz;
+            connection.Actions["Message"] = (Action<Packet>) DisplayMessage;
+            connection.Actions["Image"] = (Action<Packet>) DisplayImage;
+            connection.Actions["Buzz"] = (Action<Packet>) RecieveBuzz;
             connection.startReciving();
         }
 
@@ -104,6 +104,7 @@ namespace WpfApp2.Viewmodels
         }
         public void RecieveBuzz(Packet packet)
         {
+            BuzzPacket buzzpkt = (BuzzPacket) packet;
             System.Media.SoundPlayer player = new System.Media.SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + @"buzz\buzz.wav");
             player.Play();
             Messages.Add(packet);
@@ -117,21 +118,26 @@ namespace WpfApp2.Viewmodels
         public void SendImage()
         {
             string path = ImageHelper.SelectImage();
-            Image img = Image.FromFile(path);
-            ImagePacket packet = new ImagePacket(img, User.Username);
-            Connection.Send(packet);
-            packet.StrImage = path;
-            Messages.Add(packet);
+            if(path != null)
+            {
+                Image img = Image.FromFile(path);
+                ImagePacket packet = new ImagePacket(img, User.Username);
+                Connection.Send(packet);
+                packet.StrImage = path;
+                Messages.Add(packet);
+            }
         }
         public void DisplayMessage(Packet packet)
         {
-            Messages.Add(packet);
+            MessagePacket pkt = (MessagePacket)packet;
+            Messages.Add(pkt);
         }
-        public void DisplayImage(ImagePacket packet)
+        public void DisplayImage(Packet packet)
         {
-            string filePath = ImageHelper.SaveImage(packet);
-            packet.StrImage = filePath;
-            DisplayMessage(packet);
+            ImagePacket imgpkt = (ImagePacket)packet;
+            string filePath = ImageHelper.SaveImage(imgpkt);
+            imgpkt.StrImage = filePath;
+            Messages.Add(packet);
         }
     }
 }
