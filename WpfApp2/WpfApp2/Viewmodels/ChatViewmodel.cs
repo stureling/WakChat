@@ -107,7 +107,7 @@ namespace WpfApp2.Viewmodels
             BuzzPacket buzzpkt = (BuzzPacket) packet;
             System.Media.SoundPlayer player = new System.Media.SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + @"buzz\buzz.wav");
             player.Play();
-            Messages.Add(packet);
+            Messages.Add(buzzpkt);
         }
         public void SendBuzz()
         {
@@ -121,6 +121,7 @@ namespace WpfApp2.Viewmodels
             if(path != null)
             {
                 Image img = Image.FromFile(path);
+                //Debug.WriteLine($"Image: {img.ToString()}");
                 ImagePacket packet = new ImagePacket(img, User.Username);
                 Connection.Send(packet);
                 packet.StrImage = path;

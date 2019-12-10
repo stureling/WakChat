@@ -14,6 +14,7 @@ namespace WpfApp2.Models
         public string Username { get; set; }
         public string ConnectionType { get; set; }
         public DateTime Time { get; set; }
+        public Packet() { }
         public Packet(string username)
         {
             Username = username;
@@ -29,10 +30,12 @@ namespace WpfApp2.Models
     }
     public class ImagePacket: Packet
     {
+        public ImagePacket() : base() { }
         public ImagePacket(Image image, string username): base(username)
         {
             ConnectionType = "Image";
             StrImage = ImageHelper.EncodeImage(image);
+            format = image.RawFormat;
         }
         public string StrImage { get; set; }
         public ImageFormat format;
